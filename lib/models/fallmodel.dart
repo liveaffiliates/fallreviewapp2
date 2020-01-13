@@ -7,12 +7,12 @@ class FallData with ChangeNotifier{
   String fallId;
   String name;
   int fallTime;
-  bool unconcious;
-  bool breathing;
-  bool bleeding;
-  String painLevel;
-  bool changeLimbMov;
-  String changeLimbMovDesc;
+  bool unconciousNotBreathingBleeding;
+  bool hitHead;
+  bool pain;
+  String painDesc;
+  bool changePainWithMov;
+  String changePainWithMovDesc;
   bool bonyTenderness;
   String bonyTendernessDesc;
   bool limbShort;
@@ -20,7 +20,7 @@ class FallData with ChangeNotifier{
   bool nausea ;
   bool vomit ;
   bool sevHeadache ;
-  bool deepCut ;
+  bool cut ;
   bool neckPain ;
   bool changConcious ;
   bool antiCoag ;
@@ -28,8 +28,9 @@ class FallData with ChangeNotifier{
   int bpH;
   int bpL;
   int hR;
-  int pupils;
+  double temperature;
   double bgl;
+
 
 
 
@@ -55,47 +56,47 @@ class FallData with ChangeNotifier{
 
   int get getFallTime => fallTime;
 
-  void setUnconcious(bool value) {
-    unconcious = value;
+  void setUnconciousNotBreathingBleeding(bool value) {
+    unconciousNotBreathingBleeding = value;
     notifyListeners();
   }
 
-  bool get getUnconcious => unconcious;
+  bool get getUnconciousNotBreathingBleeding => unconciousNotBreathingBleeding;
 
-  void setBreathing(bool value) {
-    breathing = value;
+  void setHitHead(bool value) {
+    hitHead = value;
     notifyListeners();
   }
 
-  bool get getBreathing => breathing;
+  bool get getHitHead => hitHead;
 
-  void setBleeding(bool value) {
-    bleeding = value;
+  void setPain(bool value) {
+    pain = value;
     notifyListeners();
   }
 
-  bool get getBleeding => bleeding;
+  bool get getPain => pain;
 
-  void setPainLevel(String text) {
-    painLevel = text;
+  void setPainDesc(String text) {
+    painDesc = text;
     notifyListeners();
   }
 
-  String get getPainLevel => painLevel;
+  String get getPainDesc => painDesc;
 
-  void setChangeLimbMovement(bool value) {
-    changeLimbMov = value;
+  void setchangePainWithMovement(bool value) {
+    changePainWithMov = value;
     notifyListeners();
   }
 
-  bool get getChangeLimbMov => changeLimbMov;
+  bool get getChangePainWithMovement => changePainWithMov;
 
   void setChangeLimbMovementDesc(String string) {
-    changeLimbMovDesc = string;
+    changePainWithMovDesc = string;
     notifyListeners();
   }
 
-  String get getChangeLimbMovDesc => changeLimbMovDesc;
+  String get getChangePainWithMovDesc => changePainWithMovDesc;
 
   void setBonyTenderness(bool value) {
     bonyTenderness = value;
@@ -146,12 +147,12 @@ bool get getBonyTenderness => bonyTenderness;
 
   bool get getSevHeadache => sevHeadache;
 
-  void setDeepCut(bool value) {
-    deepCut = value;
+  void setCut(bool value) {
+    cut = value;
     notifyListeners();
   }
 
-  bool get getDeepCut => deepCut;
+  bool get getCut => cut;
 
 
 
@@ -207,12 +208,12 @@ bool get getBonyTenderness => bonyTenderness;
 
   int get getHr => hR;
 
-  void setPupils(int value) {
-    pupils = value;
+  void setTemperature(double value) {
+    temperature = value;
     notifyListeners();
   }
 
-  int get getPupils => pupils;
+  double get getTemperature => temperature;
 
   void setBGL(double value) {
     bgl = value;

@@ -70,6 +70,11 @@ class _IsPersonInDangerScreenState extends State<IsPersonInDangerScreen> {
                       RaisedButton(
                         child: Text('Yes or unsure'),
                         onPressed: () {
+                          fallData.setUnconciousNotBreathingBleeding(true);
+                          updateFirestoreDocument(
+                              collection: 'falls',
+                              id: fallData.getFallID,
+                              fallData: fallData);
                           Navigator.pushNamed(
                             context,
                             ReferAcdScreen.id,
@@ -82,6 +87,11 @@ class _IsPersonInDangerScreenState extends State<IsPersonInDangerScreen> {
                       RaisedButton(
                         child: Text('No'),
                         onPressed: () {
+                          fallData.setUnconciousNotBreathingBleeding(false);
+                          updateFirestoreDocument(
+                              collection: 'falls',
+                              id: fallData.getFallID,
+                              fallData: fallData);
                           Navigator.pushNamed(
                             context,
                             SuspectFractureScreen.id,

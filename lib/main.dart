@@ -42,8 +42,8 @@ class _State extends State<FallReviewApp> {
           SuspectFractureScreen.id: (context) => SuspectFractureScreen(),
           ReferAcdScreen.id: (context) => ReferAcdScreen(),
           FractureIsSuspectedScreen.id: (context) => FractureIsSuspectedScreen(),
-          VitalSignsCheck.id: (context) => VitalSignsCheck(),
-          DoesThePersonHaveSigns.id: (context) => DoesThePersonHaveSigns(),
+          DoesThePersonHave.id: (context) => DoesThePersonHave(),
+          VitalSign.id: (context) => VitalSign(),
           PossibleInjuryScreen.id: (context) => PossibleInjuryScreen(),
         };
         WidgetBuilder builder = routes[settings.name];

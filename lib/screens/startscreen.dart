@@ -6,6 +6,7 @@ import 'package:fallreview/database/FireStoreFunctions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uuid/uuid.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class HomeScreen extends StatefulWidget {
 
@@ -39,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 return ListView.builder(
                     itemCount: snapshot.data.documents.length,
                     itemBuilder: (BuildContext context, int index){
+                      String id = snapshot.data.documents[index]['fallId'];
                       String name = snapshot.data.documents[index]['name'] ?? 'No name provided';
                       int fallTime = snapshot.data.documents[index]['fallTime'];
                       var date = new DateTime.fromMillisecondsSinceEpoch(fallTime);
@@ -47,44 +49,65 @@ class _HomeScreenState extends State<HomeScreen> {
                       String fallId = snapshot.data.documents[index].documentID.toString();
 
                   return Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(4.0),
                     child: Container(
                       width: double.infinity,
                       height: 100,
-                      child: InkWell(
-                        child: Card(
-                          elevation: 10,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: <Widget>[
-                                Expanded(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(name, style: TextStyle(fontWeight: FontWeight.normal, fontSize: 18),),
-                                      SizedBox(height: 6,),
-                                      Text(fallDateTimString, style: TextStyle(fontWeight: FontWeight.normal, color: Colors.grey),),
-                                    ],
+                      child: Slidable(
+                        actionPane: SlidableDrawerActionPane(),
+                        actionExtentRatio: 0.25,
+                        key: UniqueKey(),
+                        actions: <Widget>[
+                          IconSlideAction(
+                            caption: 'Delete',
+                            color: Colors.red,
+                            icon: Icons.delete,
+                            onTap: () {
+                              setState(() async {
+
+
+                                // Delete the isolation from the database and reload the list
+                                await deleteDocument('falls', id);
+                              });
+                            },
+                          ),
+                        ],
+
+                        child: InkWell(
+                          child: Card(
+                            elevation: 10,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(name, style: TextStyle(fontWeight: FontWeight.normal, fontSize: 18),),
+                                        SizedBox(height: 6,),
+                                        Text(fallDateTimString, style: TextStyle(fontWeight: FontWeight.normal, color: Colors.grey),),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                Icon(Icons.arrow_forward_ios, size: 16,),
-                                SizedBox(width: 10,)
-                              ],
+                                  Icon(Icons.arrow_forward_ios, size: 16,),
+                                  SizedBox(width: 10,)
+                                ],
+                              ),
                             ),
                           ),
+                          onTap: (){
+                            Navigator.pushNamed(context, SummaryScreen.id,
+                                arguments: fallId);
+                          },
                         ),
-                        onTap: (){
-                          Navigator.pushNamed(context, SummaryScreen.id,
-                              arguments: fallId);
-                        },
                       ),
                     ),
                   );
                 });
               } else {
-                return CircularProgressIndicator();
+                return Center(child: CircularProgressIndicator());
               }
 
             }

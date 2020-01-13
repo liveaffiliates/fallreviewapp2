@@ -1,175 +1,91 @@
 import 'package:flutter/material.dart';
-import 'package:intl/number_symbols_data.dart';
 import 'package:provider/provider.dart';
 import 'package:fallreview/models/fallmodel.dart';
 import 'package:fallreview/database/FireStoreFunctions.dart';
 import 'package:fallreview/screens/allscreens.dart';
 
-class VitalSignsCheck extends StatefulWidget {
+class VitalSign extends StatefulWidget {
 
-  static const String id = 'VitalSignsCheck';
+  static const String id = 'vitalsign';
 
   @override
-  _VitalSignsCheckState createState() => _VitalSignsCheckState();
+  _VitalSignState createState() => _VitalSignState();
 }
 
-class _VitalSignsCheckState extends State<VitalSignsCheck> {
+class _VitalSignState extends State<VitalSign> {
   @override
   Widget build(BuildContext context) {
 
     final fallData = Provider.of<FallData>(context, listen: true);
 
-    bool nausea = false;
-    bool vomiting = false;
-    bool headache = false;
-    bool neckpain = false;
-    bool conciousness = false;
-    bool coagulents = false;
-    bool cuts = false;
-    bool weight = false;
-    bool mobility = false;
-
-
-    return Scaffold(
+        return Scaffold(
       appBar: AppBar(title: Text('Fall Report'),),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              SizedBox(height: 10,),
-              Text('Vital Signs Check?', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-
-              SizedBox(height: 8,),
-
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Checkbox(value: false,),
-                  Text('Nausea'),
-                ],
-              ),
-
-              SizedBox(height: 8,),
-
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Checkbox(value: true, onChanged: (bool){
-                    setState(() {
-                      vomiting = true;
-                    });
-                  },),
-                  Text('Vomiting'),
-                ],
-              ),
-
-              SizedBox(height: 8,),
-
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Checkbox(value: false, onChanged: (v){
-
-                  },),
-                  Text('Severe headache'),
-                ],
-              ),
-
-              SizedBox(height: 8,),
-
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Checkbox(value: true, onChanged: (v){
-
-                  },),
-                  Text('Neck pain'),
-                ],
-              ),
-
-              SizedBox(height: 8,),
-
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Checkbox(value: false, onChanged: (v){
-
-                  },),
-                  Text('Change of conciousness'),
-                ],
-              ),
-
-              SizedBox(height: 8,),
-
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Checkbox(value: false, onChanged: (v){
-
-                  },),
-                  Text('Taking anti-coagulents'),
-                ],
-              ),
-
-              SizedBox(height: 8,),
-
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Checkbox(value: true, onChanged: (v){
-
-                  },),
-                  Text('Deep cuts or lacerations'),
-                ],
-              ),
-
-              SizedBox(height: 8,),
-
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Checkbox(value: true, onChanged: (v){
-
-                  },),
-                  Text('Unable to weight bare'),
-                ],
-              ),
-
-              SizedBox(height: 8,),
-
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Checkbox(value: false, onChanged: (v){
-
-                  },),
-                  Text('Change in mobility'),
-                ],
-              ),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
 
 
+                SizedBox(height: 10,),
+                Text('Vital Signs Check?', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                SizedBox(height: 16,),
 
-              Expanded(child: Container()),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10.0),
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: (Column(
-                    children: <Widget>[
-                      RaisedButton(child: Text('Next'), onPressed: (){
-                        updateFirestoreDocument(collection: 'falls', id: fallData.getFallID, fallData: fallData);
-                        Navigator.pushNamed(context, DoesThePersonHaveSigns.id,);
-
-
-                      },),
-                    ],
-                  )),
+                TextField(
+                  maxLines: 3,
+                  decoration: InputDecoration.collapsed(hintText: 'Blood pressure (systolic/diastolic)', border: OutlineInputBorder()),
+                  onChanged: (text){
+                    fallData.setBPL(int.tryParse(text.replaceAll(new RegExp(r"\s\b|\b\s"), "").split('/')[0]));
+                    fallData.setBPH(int.tryParse(text.replaceAll(new RegExp(r"\s\b|\b\s"), "").split('/')[1]));
+                  },
                 ),
-              ),
-            ],
+
+                SizedBox(height: 10,),
+
+                TextField(
+                  keyboardType: TextInputType.number,
+                  maxLines: 3,
+                  decoration: InputDecoration.collapsed(hintText: 'Heart rate', border: OutlineInputBorder()),
+                  onChanged: (text){
+                    fallData.setHr(int.tryParse(text));
+                  },
+                ),
+
+                SizedBox(height: 10,),
+                TextField(
+
+                  maxLines: 3,
+                  decoration: InputDecoration.collapsed(hintText: 'Blood glucose test', border: OutlineInputBorder()),
+                  onChanged: (text){
+                    fallData.setBGL(double.tryParse(text));
+                  },
+                ),
+
+                SizedBox(height: 10,),
+                TextField(
+
+                  maxLines: 3,
+                  decoration: InputDecoration.collapsed(hintText: 'Temperature', border: OutlineInputBorder()),
+                  onChanged: (text){
+                    fallData.setTemperature(double.tryParse(text));
+                  },
+                ),
+
+
+
+                Center(
+                  child: RaisedButton(child: Text('Next'), onPressed: (){
+                    updateFirestoreDocument(collection: 'falls', id: fallData.getFallID, fallData: fallData);
+                    Navigator.pushNamed(context, PossibleInjuryScreen.id,);
+
+
+                  },),
+                ),
+              ],
+            ),
           ),
         ),
       ),

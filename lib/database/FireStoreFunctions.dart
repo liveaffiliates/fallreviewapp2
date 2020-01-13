@@ -8,12 +8,12 @@ Future<void> updateFirestoreDocument({FallData fallData, String collection, Stri
   'fallId': fallData.getFallID,
   'name': fallData.getName,
   'fallTime': fallData.getFallTime,
-  'unconcious': fallData.getUnconcious,
-  'breathing': fallData.getBreathing,
-  'bleeding': fallData.getBleeding,
-  'painLevel': fallData.painLevel,
-  'changeLimbMov': fallData.getChangeLimbMov,
-  'changeLimbMovDesc': fallData.getChangeLimbMovDesc,
+  'unconciousNotBreathingBleeding': fallData.getUnconciousNotBreathingBleeding,
+  'hitHead': fallData.getHitHead,
+  'pain': fallData.getPain,
+  'painDesc': fallData.getPainDesc,
+  'changePainWithMov': fallData.getChangePainWithMovement,
+  'changePainWithMovDesc': fallData.getChangePainWithMovDesc,
   'bonyTenderness': fallData.getBonyTenderness,
   'bonyTendernessDesc': fallData.getBonyTendernessDesc,
   'limbShort': fallData.getLimbShort,
@@ -21,7 +21,7 @@ Future<void> updateFirestoreDocument({FallData fallData, String collection, Stri
   'nausea': fallData.getNausea,
   'vomit': fallData.getVomit,
   'sevHeadache': fallData.getSevHeadache,
-  'deepCut': fallData.getDeepCut,
+  'deepCut': fallData.getCut,
   'neckPain': fallData.getNeckPain,
   'changConcious': fallData.getChangeConious,
   'antiCoag': fallData.getAntiCoag,
@@ -29,7 +29,7 @@ Future<void> updateFirestoreDocument({FallData fallData, String collection, Stri
   'bpH': fallData.getBPH,
   'bpL': fallData.getBPL,
   'hR': fallData.getHr,
-  'pupils': fallData.getPupils,
+  'temperature': fallData.getTemperature,
   'bgl': fallData.getBGL
 
   };
@@ -56,6 +56,13 @@ Future<void> updateFirestoreCollection(Map<dynamic, dynamic> data, String collec
 void incrementFirestore(String collection, String id, String fieldToIncrement) {
   final DocumentReference docRef = Firestore.instance.collection(collection).document(id);
   docRef.updateData({fieldToIncrement: FieldValue.increment(1)});
+}
+
+Future<void> deleteDocument(String collection, String documentID) async{
+  return Firestore.instance
+      .collection(collection)
+      .document(documentID)
+      .delete();
 }
 
 
