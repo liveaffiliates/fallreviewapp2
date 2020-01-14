@@ -4,14 +4,14 @@ import 'package:fallreview/models/fallmodel.dart';
 import 'package:fallreview/database/FireStoreFunctions.dart';
 import 'package:fallreview/screens/allscreens.dart';
 
-class SuspectFractureScreen extends StatefulWidget {
-  static const String id = 'Suspect_Fracture_Screen';
+class FractureCheckScreen extends StatefulWidget {
+  static const String id = 'fracture_check_screen';
 
   @override
-  _SuspectFractureScreenState createState() => _SuspectFractureScreenState();
+  _FractureCheckScreenState createState() => _FractureCheckScreenState();
 }
 
-class _SuspectFractureScreenState extends State<SuspectFractureScreen> {
+class _FractureCheckScreenState extends State<FractureCheckScreen> {
   @override
   Widget build(BuildContext context) {
     final fallData = Provider.of<FallData>(context, listen: true);
@@ -94,8 +94,8 @@ class _SuspectFractureScreenState extends State<SuspectFractureScreen> {
                   height: 10,
                 ),
                 TextField(
-                  maxLines: 4,
-                  decoration: InputDecoration.collapsed(
+                  autofocus: false,
+                  decoration: InputDecoration(
                       hintText: 'Details...', border: OutlineInputBorder()),
                   onChanged: (text) {
                     fallData.setPainDesc(text);
@@ -160,8 +160,8 @@ class _SuspectFractureScreenState extends State<SuspectFractureScreen> {
                   height: 10,
                 ),
                 TextField(
-                  maxLines: 4,
-                  decoration: InputDecoration.collapsed(
+                  autofocus: false,
+                  decoration: InputDecoration(
                       hintText: 'Details...', border: OutlineInputBorder()),
                   onChanged: (text) {
                     fallData.setBonyTendernessDesc(text);
@@ -228,8 +228,8 @@ class _SuspectFractureScreenState extends State<SuspectFractureScreen> {
                 ),
 
                 TextField(
-                  maxLines: 4,
-                  decoration: InputDecoration.collapsed(
+                  autofocus: false,
+                  decoration: InputDecoration(
                       hintText: 'Details', border: OutlineInputBorder()),
                   onChanged: (text) {
                     fallData.setChangeLimbMovementDesc(text);
@@ -296,8 +296,8 @@ class _SuspectFractureScreenState extends State<SuspectFractureScreen> {
                 ),
 
                 TextField(
-                  maxLines: 4,
-                  decoration: InputDecoration.collapsed(
+                  autofocus: false,
+                  decoration: InputDecoration(
                       hintText: 'Details', border: OutlineInputBorder()),
                   onChanged: (text) {
                     fallData.setChangeLimbMovementDesc(text);
@@ -319,7 +319,7 @@ class _SuspectFractureScreenState extends State<SuspectFractureScreen> {
                             fallData: fallData);
                         Navigator.pushNamed(
                           context,
-                          DoesThePersonHave.id,
+                          VitalSignsCheckScreen.id,
                         );
                       },
                     )),

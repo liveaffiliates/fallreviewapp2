@@ -35,15 +35,14 @@ class _State extends State<FallReviewApp> {
 
         var routes = <String, WidgetBuilder>{
           HomeScreen.id: (context) => HomeScreen(),
-          QuestionScreen.id: (context) => QuestionScreen(),
-          SummaryScreen.id: (context) => SummaryScreen(settings.arguments),
+          SubmitScreen.id: (context) => SubmitScreen(settings.arguments),
           PersonsNameScreen.id: (context) => PersonsNameScreen(),
-          IsPersonInDangerScreen.id: (context) => IsPersonInDangerScreen(),
-          SuspectFractureScreen.id: (context) => SuspectFractureScreen(),
+          UnconciousBreathingBleedingCheckScreen.id: (context) => UnconciousBreathingBleedingCheckScreen(),
+          FractureCheckScreen.id: (context) => FractureCheckScreen(),
           ReferAcdScreen.id: (context) => ReferAcdScreen(),
           FractureIsSuspectedScreen.id: (context) => FractureIsSuspectedScreen(),
-          DoesThePersonHave.id: (context) => DoesThePersonHave(),
-          VitalSign.id: (context) => VitalSign(),
+          InjuryCheckScreen.id: (context) => InjuryCheckScreen(),
+          VitalSignsCheckScreen.id: (context) => VitalSignsCheckScreen(),
           PossibleInjuryScreen.id: (context) => PossibleInjuryScreen(),
         };
         WidgetBuilder builder = routes[settings.name];

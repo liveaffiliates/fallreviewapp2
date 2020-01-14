@@ -46,7 +46,7 @@ class _PersonsNameScreenState extends State<PersonsNameScreen> {
                     children: <Widget>[
                       RaisedButton(child: Text('Next'), onPressed: (){
                         updateFirestoreDocument(collection: 'falls', id: fallData.getFallID, fallData: fallData);
-                        Navigator.pushNamed(context, IsPersonInDangerScreen.id,);
+                        Navigator.pushNamed(context, UnconciousBreathingBleedingCheckScreen.id,);
 
                       },),
                     ],

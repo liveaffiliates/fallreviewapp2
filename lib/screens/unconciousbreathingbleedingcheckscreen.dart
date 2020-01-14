@@ -4,14 +4,14 @@ import 'package:provider/provider.dart';
 import 'package:fallreview/models/fallmodel.dart';
 import 'package:fallreview/database/FireStoreFunctions.dart';
 
-class IsPersonInDangerScreen extends StatefulWidget {
-  static const String id = 'Is_Person_In_Danger_Screen';
+class UnconciousBreathingBleedingCheckScreen extends StatefulWidget {
+  static const String id = 'unconcious_breathing_bleeding_checkScreen';
 
   @override
-  _IsPersonInDangerScreenState createState() => _IsPersonInDangerScreenState();
+  _UnconciousBreathingBleedingCheckScreenState createState() => _UnconciousBreathingBleedingCheckScreenState();
 }
 
-class _IsPersonInDangerScreenState extends State<IsPersonInDangerScreen> {
+class _UnconciousBreathingBleedingCheckScreenState extends State<UnconciousBreathingBleedingCheckScreen> {
   @override
   Widget build(BuildContext context) {
     final fallData = Provider.of<FallData>(context, listen: true);
@@ -94,7 +94,7 @@ class _IsPersonInDangerScreenState extends State<IsPersonInDangerScreen> {
                               fallData: fallData);
                           Navigator.pushNamed(
                             context,
-                            SuspectFractureScreen.id,
+                            FractureCheckScreen.id,
                           );
                         },
                       ),

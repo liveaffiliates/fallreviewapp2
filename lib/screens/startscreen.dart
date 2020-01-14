@@ -98,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           onTap: (){
-                            Navigator.pushNamed(context, SummaryScreen.id,
+                            Navigator.pushNamed(context, SubmitScreen.id,
                                 arguments: fallId);
                           },
                         ),

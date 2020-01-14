@@ -21,7 +21,7 @@ Future<void> updateFirestoreDocument({FallData fallData, String collection, Stri
   'nausea': fallData.getNausea,
   'vomit': fallData.getVomit,
   'sevHeadache': fallData.getSevHeadache,
-  'deepCut': fallData.getCut,
+  'cut': fallData.getCut,
   'neckPain': fallData.getNeckPain,
   'changConcious': fallData.getChangeConious,
   'antiCoag': fallData.getAntiCoag,
