@@ -40,7 +40,7 @@ class _State extends State<FallReviewApp> {
           UnconciousBreathingBleedingCheckScreen.id: (context) => UnconciousBreathingBleedingCheckScreen(),
           FractureCheckScreen.id: (context) => FractureCheckScreen(),
           ReferAcdScreen.id: (context) => ReferAcdScreen(),
-          FractureIsSuspectedScreen.id: (context) => FractureIsSuspectedScreen(),
+          ResultsScreen.id: (context) => ResultsScreen(),
           InjuryCheckScreen.id: (context) => InjuryCheckScreen(),
           VitalSignsCheckScreen.id: (context) => VitalSignsCheckScreen(),
           PossibleInjuryScreen.id: (context) => PossibleInjuryScreen(),

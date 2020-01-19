@@ -169,6 +169,7 @@ class _InjuryCheckScreenState extends State<InjuryCheckScreen> {
                       children: <Widget>[
                         RaisedButton(child: Text('Next'), onPressed: (){
 
+                          // If they have not selected the tick boxes set them to false
                           if(fallData.getHitHead == null){fallData.setHitHead(false);}
                           if(fallData.getNausea == null){fallData.setNausea(false);}
                           if(fallData.getVomit == null){fallData.setVomit(false);}
@@ -179,6 +180,73 @@ class _InjuryCheckScreenState extends State<InjuryCheckScreen> {
                           if(fallData.getCut == null){fallData.setCut(false);}
                           if(fallData.getWeightBear == null){fallData.setWeightBear(false);}
 
+
+                          //  IF  TRUE TO unable to weight bear without pain” → suspect fracture screen
+                          if (fallData.getWeightBear){
+                            fallData.setSuspectedFracture(true);
+                          }
+
+                          // IF TRUE TO any two of the following four (if that works - if not I would go to the suspect fracture screen if any of those below are true) → suspect fracture screen
+                          // Yes to having pain
+                          // Yes to having tenderness on palpation
+                          // Yes to having increase in pain with movement
+                          // Yes to having Limb shortening with deformity
+                          int numberOfSuspectFractures = 0;
+                          if (fallData.getPain != null && fallData.getPain){numberOfSuspectFractures++;}
+                          if (fallData.getBonyTenderness != null && fallData.getBonyTenderness){numberOfSuspectFractures++;}
+                          if (fallData.getChangePainWithMovement != null && fallData.getChangePainWithMovement){numberOfSuspectFractures++;}
+                          if (fallData.getLimbShort != null && fallData.getLimbShort){numberOfSuspectFractures++;}
+
+                          if (numberOfSuspectFractures >= 2){
+                            fallData.setSuspectedFracture(true);
+                          }
+
+
+                          //Upper and Lower limits
+                          //int bpH; High >170 mmHg (millimeters of mercury). Low <90mmHg
+                          //int bpL; High > 110mmHg. Low <50mmHg
+                          //int hR; High >100bpm (beats per minute). Low 50bpm
+                          //int pupils; unsure atm I’ll find this out
+                          //double bgl; blood glucose high: 7.8mmol/L (millimoles per litre) - (non-diabetic). 8.5mmol/L to (Diabetics). ← might need a dropdown question if they are diabetic or not. If thats too hard atm then we can just go with 7.8mmol/L as too high. Low 4.0
+                          //Temperature: High: >37.9 Low: <36.1 celcius degrees (C)
+
+
+                          //Possible Injury screen
+                          //IF TRUE TO ANY OF THE FOLLOWING
+                          //Change of consciousness
+                          //Cut or laceration
+                          //High or low BP
+                          //High or low HR
+                          //Pupils - abnormal
+                          //IF TRUE TO THESE TWO
+                          //Taking anti-coagulants and suspected hit head.
+                          //Nausea and suspected hit head.
+                          //Vomiting and suspected hit head.
+                          //A severe headache and suspected hit head.
+                          //Neck pain and suspected hit head.
+
+                          if (
+                            fallData.getChangeConious ||
+                            fallData.getCut ||
+                            fallData.getBPH != null && fallData.getBPH > 170 ||
+                            fallData.getBPH != null && fallData.getBPH < 90 ||
+                            fallData.getBPL != null && fallData.getBPL > 110 ||
+                            fallData.getBPL != null && fallData.getBPL < 50 ||
+                            fallData.getHr != null && fallData.getHr > 100 ||
+                            fallData.getHr != null && fallData.getHr < 50 ||
+                            fallData.getAntiCoag && fallData.getHitHead ||
+                            fallData.getNausea && fallData.getHitHead ||
+                            fallData.getVomit && fallData.getHitHead ||
+                            fallData.getSevHeadache && fallData.getHitHead ||
+                            fallData.getNeckPain && fallData.getHitHead
+                          //fallData.getBGL > 7.8 ||
+                          //fallData.getBGL < 4.0 ||
+                          //fallData.getTemperature > 37.9 ||
+                          //fallData.getTemperature < 36.1 ||
+                          //fallData.getPupils
+                          ){
+                            fallData.getPossibleInjury;
+                          }
 
 
                           updateFirestoreDocument(collection: 'falls', id: fallData.getFallID, fallData: fallData);

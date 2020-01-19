@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fallreview/screens/allscreens.dart';
 
 class SubmitScreen extends StatefulWidget {
   final String fallID;
@@ -402,7 +403,7 @@ class _SubmitScreenState extends State<SubmitScreen> {
                             child: (Column(
                               children: <Widget>[
                                 RaisedButton(child: Text('Submit'), onPressed: (){
-                                 // Navigator.pushNamed(context, SubmitScreen.id, arguments: fallData.getFallID);
+                                 Navigator.pushNamed(context, ResultsScreen.id,);
 
 
                                 },),

@@ -30,7 +30,8 @@ class FallData with ChangeNotifier{
   int hR;
   double temperature;
   double bgl;
-
+  bool possibleInjury ;
+  bool suspectedFracture ;
 
 
 
@@ -154,9 +155,6 @@ bool get getBonyTenderness => bonyTenderness;
 
   bool get getCut => cut;
 
-
-
-
   void setNeckPain(bool value) {
     neckPain = value;
     notifyListeners();
@@ -221,6 +219,20 @@ bool get getBonyTenderness => bonyTenderness;
   }
 
   double get getBGL => bgl;
+
+  void setPossibleInjury(bool value) {
+    possibleInjury = value;
+    notifyListeners();
+  }
+
+  bool get getPossibleInjury => possibleInjury;
+
+  void setSuspectedFracture(bool value) {
+    suspectedFracture = value;
+    notifyListeners();
+  }
+
+  bool get getSuspectedFracture => suspectedFracture;
 
 
 }

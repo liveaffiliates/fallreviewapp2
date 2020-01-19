@@ -6,7 +6,7 @@ import 'package:fallreview/screens/allscreens.dart';
 
 class ReferAcdScreen extends StatefulWidget {
 
-  static const String id = 'Refer_ACD_Screen';
+  static const String id = 'refer_acd_screen';
 
   @override
   _ReferAcdScreenState createState() => _ReferAcdScreenState();

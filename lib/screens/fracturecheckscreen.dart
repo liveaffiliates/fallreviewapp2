@@ -317,10 +317,12 @@ class _FractureCheckScreenState extends State<FractureCheckScreen> {
                             collection: 'falls',
                             id: fallData.getFallID,
                             fallData: fallData);
+
                         Navigator.pushNamed(
                           context,
                           VitalSignsCheckScreen.id,
                         );
+
                       },
                     )),
                   ),
