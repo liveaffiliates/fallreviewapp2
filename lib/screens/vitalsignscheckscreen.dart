@@ -50,10 +50,10 @@ class _VitalSignsCheckScreenState extends State<VitalSignsCheckScreen> {
                             hintText: 'Blood pressure (systolic/diastolic)',
                             border: OutlineInputBorder()),
                         onChanged: (text) {
-                          fallData.setBPL(int.tryParse(text
+                          fallData.setBPSis(int.tryParse(text
                               .replaceAll(new RegExp(r"\s\b|\b\s"), "")
                               .split('/')[0]));
-                          fallData.setBPH(int.tryParse(text
+                          fallData.setBPDia(int.tryParse(text
                               .replaceAll(new RegExp(r"\s\b|\b\s"), "")
                               .split('/')[1]));
                         },

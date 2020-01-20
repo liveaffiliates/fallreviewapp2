@@ -39,16 +39,16 @@ class _ResultsScreenState extends State<ResultsScreen> {
                   if((fallData.getSuspectedFracture != null && fallData.getSuspectedFracture &&  fallData.getPossibleInjury != null && fallData.getPossibleInjury))
                   Text('and', style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.white),),
                   if(fallData.getSuspectedFracture != null && fallData.getSuspectedFracture)
-                    Text('Suspected Fracture', style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.white),),
+                    Text('Suspect fracture', style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.white),),
                   SizedBox(height: 20,),
                   Text('Do not move patient', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),),
                 ],)),
               ),
-            ), 
+            ),
 
             SizedBox(height: 20,),
 
-            Text('Refer to ACD and call ambulance iff required', style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),),
+            Text('Refer to ACD and call ambulance if required', style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),),
 
 
             Expanded(child: Container()),

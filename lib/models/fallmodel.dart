@@ -25,8 +25,8 @@ class FallData with ChangeNotifier{
   bool changConcious ;
   bool antiCoag ;
   bool weightBear ;
-  int bpH;
-  int bpL;
+  int bpDia;
+  int bpSis;
   int hR;
   double temperature;
   double bgl;
@@ -184,19 +184,19 @@ bool get getBonyTenderness => bonyTenderness;
   bool get getWeightBear => weightBear;
 
 
-  void setBPH(int value) {
-    bpH = value;
+  void setBPDia(int value) {
+    bpDia = value;
     notifyListeners();
   }
 
-  int get getBPH => bpH;
+  int get getBPDia => bpDia;
 
-  void setBPL(int value) {
-    bpL = value;
+  void setBPSis(int value) {
+    bpSis = value;
     notifyListeners();
   }
 
-  int get getBPL => bpL;
+  int get getBPSis => bpSis;
 
 
   void setHr(int value) {
@@ -233,6 +233,40 @@ bool get getBonyTenderness => bonyTenderness;
   }
 
   bool get getSuspectedFracture => suspectedFracture;
+
+  void clearFallModel(){
+
+    fallId = null;
+    name = null;
+    fallTime = null;
+    unconciousNotBreathingBleeding = null;
+    hitHead = null;
+    pain = null;
+    painDesc = null;
+    changePainWithMov = null;
+    changePainWithMovDesc = null;
+    bonyTenderness = null;
+    bonyTendernessDesc = null;
+    limbShort = null;
+    limbShortDecs = null;
+    nausea = null;
+    vomit = null;
+    sevHeadache = null;
+    cut = null;
+    neckPain = null;
+    changConcious = null;
+    antiCoag = null;
+    weightBear = null;
+    bpDia = null;
+    bpSis = null;
+    hR = null;
+    temperature = null;
+    bgl = null;
+    possibleInjury = null;
+    suspectedFracture = null;
+
+    notifyListeners();
+  }
 
 
 }

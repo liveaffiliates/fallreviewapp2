@@ -26,11 +26,13 @@ Future<void> updateFirestoreDocument({FallData fallData, String collection, Stri
   'changConcious': fallData.getChangeConious,
   'antiCoag': fallData.getAntiCoag,
   'weightBear': fallData.getWeightBear,
-  'bpH': fallData.getBPH,
-  'bpL': fallData.getBPL,
+  'bpDia': fallData.getBPDia,
+  'bpSis': fallData.getBPSis,
   'hR': fallData.getHr,
   'temperature': fallData.getTemperature,
-  'bgl': fallData.getBGL
+  'bgl': fallData.getBGL,
+  'possibleInjury': fallData.getPossibleInjury,
+  'suspectedFracture': fallData.getSuspectedFracture
 
   };
 

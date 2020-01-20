@@ -171,7 +171,7 @@ class _FractureCheckScreenState extends State<FractureCheckScreen> {
                   height: 10,
                 ),
                 Text(
-                  'Changes in pain with movement?',
+                  'Increase in pain with movement?',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
@@ -300,7 +300,7 @@ class _FractureCheckScreenState extends State<FractureCheckScreen> {
                   decoration: InputDecoration(
                       hintText: 'Details', border: OutlineInputBorder()),
                   onChanged: (text) {
-                    fallData.setChangeLimbMovementDesc(text);
+                    fallData.setLimbShortDesc(text);
                   },
                 ),
                 SizedBox(

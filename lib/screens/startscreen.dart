@@ -62,12 +62,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             caption: 'Delete',
                             color: Colors.red,
                             icon: Icons.delete,
-                            onTap: () {
-                              setState(() async {
+                            onTap: () async  {
 
+                              await deleteDocument('falls', id).then((onValue){
+                                setState(()  {
 
-                                // Delete the isolation from the database and reload the list
-                                await deleteDocument('falls', id);
+                                });
+
                               });
                             },
                           ),
@@ -132,6 +133,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                   onPressed: (){
+
+                    fallData.clearFallModel();
 
                     var uuid = new Uuid();
                     fallData.setFallID(uuid.v4());

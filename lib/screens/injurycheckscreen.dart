@@ -155,7 +155,7 @@ class _InjuryCheckScreenState extends State<InjuryCheckScreen> {
                         fallData.setWeightBear(value);
                       });
                     },),
-                    Text('Unable to weight bear'),
+                    Text('Unable to weight bear without pain'),
                   ],
                 ),
 
@@ -228,10 +228,10 @@ class _InjuryCheckScreenState extends State<InjuryCheckScreen> {
                           if (
                             fallData.getChangeConious ||
                             fallData.getCut ||
-                            fallData.getBPH != null && fallData.getBPH > 170 ||
-                            fallData.getBPH != null && fallData.getBPH < 90 ||
-                            fallData.getBPL != null && fallData.getBPL > 110 ||
-                            fallData.getBPL != null && fallData.getBPL < 50 ||
+                            fallData.getBPDia != null && fallData.getBPDia > 170 ||
+                            fallData.getBPDia != null && fallData.getBPDia < 90 ||
+                            fallData.getBPSis != null && fallData.getBPSis > 110 ||
+                            fallData.getBPSis != null && fallData.getBPSis < 50 ||
                             fallData.getHr != null && fallData.getHr > 100 ||
                             fallData.getHr != null && fallData.getHr < 50 ||
                             fallData.getAntiCoag && fallData.getHitHead ||
