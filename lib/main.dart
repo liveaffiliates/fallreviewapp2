@@ -1,3 +1,4 @@
+import 'package:fallreview/screens/disclaimerscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:fallreview/screens/allscreens.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +31,7 @@ class _State extends State<FallReviewApp> {
 
 
       ),
-      initialRoute: HomeScreen.id,
+      initialRoute: DisclaimerScreen.id,
       onGenerateRoute: (RouteSettings settings){
 
         var routes = <String, WidgetBuilder>{
@@ -43,7 +44,7 @@ class _State extends State<FallReviewApp> {
           ResultsScreen.id: (context) => ResultsScreen(),
           InjuryCheckScreen.id: (context) => InjuryCheckScreen(),
           VitalSignsCheckScreen.id: (context) => VitalSignsCheckScreen(),
-          PossibleInjuryScreen.id: (context) => PossibleInjuryScreen(),
+          DisclaimerScreen.id: (context) => DisclaimerScreen(),
         };
         WidgetBuilder builder = routes[settings.name];
         return MaterialPageRoute(builder: (ctx) => builder(ctx));

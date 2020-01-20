@@ -30,7 +30,9 @@ class _InjuryCheckScreenState extends State<InjuryCheckScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
+
                 SizedBox(height: 10,),
+
                 Text('Does the person have any of the following?', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
 
                 SizedBox(height: 8,),
@@ -182,10 +184,6 @@ class _InjuryCheckScreenState extends State<InjuryCheckScreen> {
 
 
                           //  IF  TRUE TO unable to weight bear without pain” → suspect fracture screen
-                          if (fallData.getWeightBear){
-                            fallData.setSuspectedFracture(true);
-                          }
-
                           // IF TRUE TO any two of the following four (if that works - if not I would go to the suspect fracture screen if any of those below are true) → suspect fracture screen
                           // Yes to having pain
                           // Yes to having tenderness on palpation
@@ -197,9 +195,12 @@ class _InjuryCheckScreenState extends State<InjuryCheckScreen> {
                           if (fallData.getChangePainWithMovement != null && fallData.getChangePainWithMovement){numberOfSuspectFractures++;}
                           if (fallData.getLimbShort != null && fallData.getLimbShort){numberOfSuspectFractures++;}
 
-                          if (numberOfSuspectFractures >= 2){
+                          if (numberOfSuspectFractures >= 2 || fallData.getWeightBear){
                             fallData.setSuspectedFracture(true);
+                          } else {
+                            fallData.setSuspectedFracture(false);
                           }
+
 
 
                           //Upper and Lower limits
@@ -245,7 +246,9 @@ class _InjuryCheckScreenState extends State<InjuryCheckScreen> {
                           //fallData.getTemperature < 36.1 ||
                           //fallData.getPupils
                           ){
-                            fallData.getPossibleInjury;
+                            fallData.setPossibleInjury(true);
+                          } else {
+                            fallData.setPossibleInjury(false);
                           }
 
 
