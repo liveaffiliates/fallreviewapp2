@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fallreview/screens/allscreens.dart';
 import 'package:provider/provider.dart';
 import 'package:fallreview/models/fallmodel.dart';
+import 'package:flutter/services.dart';
 
 
 void main() => runApp(ChangeNotifierProvider(
@@ -18,6 +19,10 @@ class FallReviewApp extends StatefulWidget {
 class _State extends State<FallReviewApp> {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return MaterialApp(
       theme: ThemeData(
         accentColor: Colors.red,

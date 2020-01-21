@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       String name = snapshot.data.documents[index]['name'] ?? 'No name provided';
                       int fallTime = snapshot.data.documents[index]['fallTime'];
                       var date = new DateTime.fromMillisecondsSinceEpoch(fallTime);
-                      final f = new DateFormat('dd/mm/yyyy HH:MM');
+                      final f = new DateFormat('dd/MM/yyyy HH:MM');
                       String fallDateTimString = f.format(date);
                       String fallId = snapshot.data.documents[index].documentID.toString();
 

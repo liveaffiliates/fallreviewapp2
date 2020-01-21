@@ -46,6 +46,8 @@ class _FractureCheckScreenState extends State<FractureCheckScreen> {
                   height: 10,
                 ),
                 Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     RaisedButton(
                       color: (fallData.getPain == true)
@@ -112,6 +114,8 @@ class _FractureCheckScreenState extends State<FractureCheckScreen> {
                   height: 10,
                 ),
                 Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     RaisedButton(
                       color: (fallData.getBonyTenderness == true)
@@ -178,6 +182,8 @@ class _FractureCheckScreenState extends State<FractureCheckScreen> {
                   height: 10,
                 ),
                 Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     RaisedButton(
                       color: (fallData.getChangePainWithMovement == true)
@@ -246,6 +252,8 @@ class _FractureCheckScreenState extends State<FractureCheckScreen> {
                   height: 10,
                 ),
                 Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     RaisedButton(
                       color: (fallData.getLimbShort == true)

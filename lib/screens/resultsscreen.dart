@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fallreview/models/fallmodel.dart';
+import 'package:fallreview/screens/allscreens.dart';
 
 class ResultsScreen extends StatefulWidget {
 
@@ -125,8 +126,9 @@ class _ResultsScreenState extends State<ResultsScreen> {
                 alignment: Alignment.bottomCenter,
                 child: (Column(
                   children: <Widget>[
-                    RaisedButton(child: Text('Done'), onPressed: (){
+                    RaisedButton(child: Text('Summary'), onPressed: (){
 
+                      Navigator.pushNamed(context, SubmitScreen.id, arguments: fallData.getFallID);
 
                     },),
                   ],

@@ -229,10 +229,10 @@ class _InjuryCheckScreenState extends State<InjuryCheckScreen> {
                           if (
                             fallData.getChangeConious ||
                             fallData.getCut ||
-                            fallData.getBPDia != null && fallData.getBPDia > 170 ||
-                            fallData.getBPDia != null && fallData.getBPDia < 90 ||
-                            fallData.getBPSis != null && fallData.getBPSis > 110 ||
-                            fallData.getBPSis != null && fallData.getBPSis < 50 ||
+                            fallData.getBPSis != null && fallData.getBPDia > 170 ||
+                            fallData.getBPSis != null && fallData.getBPDia < 90 ||
+                            fallData.getBPDia != null && fallData.getBPSis > 110 ||
+                            fallData.getBPDia != null && fallData.getBPSis < 50 ||
                             fallData.getHr != null && fallData.getHr > 100 ||
                             fallData.getHr != null && fallData.getHr < 50 ||
                             fallData.getAntiCoag && fallData.getHitHead ||
@@ -253,7 +253,8 @@ class _InjuryCheckScreenState extends State<InjuryCheckScreen> {
 
 
                           updateFirestoreDocument(collection: 'falls', id: fallData.getFallID, fallData: fallData);
-                          Navigator.pushNamed(context, SubmitScreen.id, arguments: fallData.getFallID);
+                          Navigator.pushNamed(context, ResultsScreen.id,);
+
 
 
                         },),
