@@ -47,9 +47,11 @@ class _ReferAcdScreenState extends State<ReferAcdScreen> {
                 alignment: Alignment.bottomCenter,
                 child: (Column(
                   children: <Widget>[
-                    RaisedButton(child: Text('Done'), onPressed: (){
-
-
+                    RaisedButton(child: Text('Next'), onPressed: (){
+                      Navigator.pushNamed(
+                        context,
+                        PersonsNameScreen.id,
+                      );
                     },),
                   ],
                 )),

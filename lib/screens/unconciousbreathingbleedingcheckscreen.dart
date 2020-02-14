@@ -94,7 +94,7 @@ class _UnconciousBreathingBleedingCheckScreenState extends State<UnconciousBreat
                               fallData: fallData);
                           Navigator.pushNamed(
                             context,
-                            FractureCheckScreen.id,
+                            PersonsNameScreen.id,
                           );
                         },
                       ),

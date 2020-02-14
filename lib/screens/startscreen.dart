@@ -142,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     updateFirestoreDocument(collection: 'falls', id: fallData.getFallID, fallData: fallData);
 
-                    Navigator.pushNamed(context, PersonsNameScreen.id,);
+                    Navigator.pushNamed(context, UnconciousBreathingBleedingCheckScreen.id,);
 
                   },
                 ),

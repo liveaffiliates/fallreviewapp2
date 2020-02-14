@@ -32,8 +32,14 @@ Future<void> updateFirestoreDocument({FallData fallData, String collection, Stri
   'temperature': fallData.getTemperature,
   'bgl': fallData.getBGL,
   'possibleInjury': fallData.getPossibleInjury,
-  'suspectedFracture': fallData.getSuspectedFracture
-
+  'suspectedFracture': fallData.getSuspectedFracture,
+  'pupilLeft': fallData.getPupilL,
+  'pupilRight': fallData.getPupilR,
+  'pupilDesc': fallData.getPupilDesc,
+  'respRate': fallData.getRespRate,
+  'fallWitnessed': fallData.getFallWitnessed,
+  'fallDesc': fallData.getFallDesc,
+  'timeOnGround': fallData.getTimeOnGround,
   };
 
 

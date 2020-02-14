@@ -30,9 +30,15 @@ class FallData with ChangeNotifier{
   int hR;
   double temperature;
   double bgl;
-  bool possibleInjury ;
-  bool suspectedFracture ;
-
+  bool possibleInjury;
+  bool suspectedFracture;
+  int pupilLeft;
+  int pupilRight;
+  String pupilDesc;
+  int respRate;
+  bool fallWitnessed;
+  String fallDesc;
+  int timeOnGround;
 
 
   void setFallID(String text) {
@@ -104,7 +110,7 @@ class FallData with ChangeNotifier{
     notifyListeners();
   }
 
-bool get getBonyTenderness => bonyTenderness;
+  bool get getBonyTenderness => bonyTenderness;
 
   void setBonyTendernessDesc(String string) {
     bonyTendernessDesc = string;
@@ -234,6 +240,60 @@ bool get getBonyTenderness => bonyTenderness;
 
   bool get getSuspectedFracture => suspectedFracture;
 
+  void setPupilL(int pupilL) {
+    pupilLeft = pupilL;
+    notifyListeners();
+  }
+
+  int get getPupilL => pupilLeft;
+
+  void setPupilR(int pupilR) {
+    pupilRight = pupilR;
+    notifyListeners();
+  }
+
+  int get getPupilR => pupilRight;
+
+  void setLPupilDesc(String string) {
+    pupilDesc = string;
+    notifyListeners();
+  }
+
+  String get getPupilDesc => pupilDesc;
+
+  void setRespRate(int value) {
+    respRate = value;
+    notifyListeners();
+  }
+
+  int get getRespRate => respRate;
+
+  void setFallWitnessed(bool value) {
+    fallWitnessed = value;
+    notifyListeners();
+  }
+
+  bool get getFallWitnessed => fallWitnessed;
+
+
+  void setFallDesc(String string) {
+    fallDesc = string;
+    notifyListeners();
+  }
+
+  String get getFallDesc => fallDesc;
+
+  void setTimeOnGround(int value) {
+    timeOnGround = value;
+    notifyListeners();
+  }
+
+  int get getTimeOnGround => timeOnGround;
+
+
+
+
+
   void clearFallModel(){
 
     fallId = null;
@@ -264,6 +324,13 @@ bool get getBonyTenderness => bonyTenderness;
     bgl = null;
     possibleInjury = null;
     suspectedFracture = null;
+    pupilLeft = null;
+    pupilRight = null;
+    pupilDesc = null;
+    respRate = null;
+    fallWitnessed = null;
+    fallDesc = null;
+    timeOnGround = null;
 
     notifyListeners();
   }

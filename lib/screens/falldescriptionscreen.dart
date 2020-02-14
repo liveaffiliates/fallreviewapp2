@@ -4,22 +4,22 @@ import 'package:fallreview/models/fallmodel.dart';
 import 'package:fallreview/database/FireStoreFunctions.dart';
 import 'package:fallreview/screens/allscreens.dart';
 
-class PersonsNameScreen extends StatefulWidget {
+class FallDescriptionScreen extends StatefulWidget {
 
-  static const String id = 'Persons_Name_Screen';
+  static const String id = 'Fall_Desc_Screen';
 
   @override
-  _PersonsNameScreenState createState() => _PersonsNameScreenState();
+  _FallDescriptionScreenState createState() => _FallDescriptionScreenState();
 }
 
-class _PersonsNameScreenState extends State<PersonsNameScreen> {
+class _FallDescriptionScreenState extends State<FallDescriptionScreen> {
   @override
   Widget build(BuildContext context) {
 
     final fallData = Provider.of<FallData>(context, listen: true);
 
     return Scaffold(
-      appBar: AppBar(title: Text('Fall Report'),automaticallyImplyLeading: false,),
+      appBar: AppBar(title: Text('Fall Report')),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 16.0, right: 16.0),
@@ -28,12 +28,23 @@ class _PersonsNameScreenState extends State<PersonsNameScreen> {
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               SizedBox(height: 16,),
-              Text('What is the persons name?', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+              Text('Fall Details', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
               SizedBox(height: 24,),
               TextField(
-                decoration: InputDecoration(border: OutlineInputBorder(),hintText: 'Name'),
+                maxLines: 2,
+                decoration: InputDecoration(border: OutlineInputBorder(),hintText: 'Fall description'),
                 onChanged: (text){
-                  fallData.setName(text);
+                  fallData.setFallDesc(text);
+                },
+              ),
+
+              SizedBox(height: 10,),
+              TextField(
+                keyboardType: TextInputType.number,
+                maxLines: 1,
+                decoration: InputDecoration(border: OutlineInputBorder(),hintText: 'Time lying on the ground (m) '),
+                onChanged: (text){
+                  fallData.setFallTime(int.tryParse(text));
                 },
               ),
 
@@ -46,8 +57,14 @@ class _PersonsNameScreenState extends State<PersonsNameScreen> {
                     children: <Widget>[
                       RaisedButton(child: Text('Next'), onPressed: (){
                         updateFirestoreDocument(collection: 'falls', id: fallData.getFallID, fallData: fallData);
-                        Navigator.pushNamed(context, FallDescriptionScreen.id,);
-
+                        updateFirestoreDocument(
+                            collection: 'falls',
+                            id: fallData.getFallID,
+                            fallData: fallData);
+                        Navigator.pushNamed(
+                          context,
+                          FractureCheckScreen.id,
+                        );
                       },),
                     ],
                   )),
