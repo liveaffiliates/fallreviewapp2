@@ -5,7 +5,6 @@ import 'package:fallreview/database/FireStoreFunctions.dart';
 import 'package:fallreview/screens/allscreens.dart';
 
 class FallDescriptionScreen extends StatefulWidget {
-
   static const String id = 'Fall_Desc_Screen';
 
   @override
@@ -15,7 +14,6 @@ class FallDescriptionScreen extends StatefulWidget {
 class _FallDescriptionScreenState extends State<FallDescriptionScreen> {
   @override
   Widget build(BuildContext context) {
-
     final fallData = Provider.of<FallData>(context, listen: true);
 
     return Scaffold(
@@ -27,27 +25,37 @@ class _FallDescriptionScreenState extends State<FallDescriptionScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              SizedBox(height: 16,),
-              Text('Fall Details', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-              SizedBox(height: 24,),
+              SizedBox(
+                height: 16,
+              ),
+              Text(
+                'Fall Details',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 24,
+              ),
               TextField(
                 maxLines: 2,
-                decoration: InputDecoration(border: OutlineInputBorder(),hintText: 'Fall description'),
-                onChanged: (text){
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(), hintText: 'Fall description'),
+                onChanged: (text) {
                   fallData.setFallDesc(text);
                 },
               ),
-
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
               TextField(
                 keyboardType: TextInputType.number,
                 maxLines: 1,
-                decoration: InputDecoration(border: OutlineInputBorder(),hintText: 'Time lying on the ground (m) '),
-                onChanged: (text){
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Time lying on the ground (m) '),
+                onChanged: (text) {
                   fallData.setFallTime(int.tryParse(text));
                 },
               ),
-
               Expanded(child: Container()),
               Padding(
                 padding: const EdgeInsets.only(bottom: 16.0),
@@ -55,17 +63,19 @@ class _FallDescriptionScreenState extends State<FallDescriptionScreen> {
                   alignment: Alignment.bottomCenter,
                   child: (Column(
                     children: <Widget>[
-                      RaisedButton(child: Text('Next'), onPressed: (){
-                        updateFirestoreDocument(collection: 'falls', id: fallData.getFallID, fallData: fallData);
-                        updateFirestoreDocument(
-                            collection: 'falls',
-                            id: fallData.getFallID,
-                            fallData: fallData);
-                        Navigator.pushNamed(
-                          context,
-                          FractureCheckScreen.id,
-                        );
-                      },),
+                      RaisedButton(
+                        child: Text('Next'),
+                        onPressed: () {
+                          updateFirestoreDocument(
+                              collection: 'falls',
+                              id: fallData.getFallID,
+                              fallData: fallData);
+                          Navigator.pushNamed(
+                            context,
+                            FractureCheckScreen.id,
+                          );
+                        },
+                      ),
                     ],
                   )),
                 ),

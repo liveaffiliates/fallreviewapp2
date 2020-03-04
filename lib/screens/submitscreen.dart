@@ -40,6 +40,13 @@ class _SubmitScreenState extends State<SubmitScreen> {
               // Name
               String name = snapshot.data['name'] ?? 'No name provided';
 
+              // Fall Description
+              String description = snapshot.data['fallDesc'] ?? 'No description provided';
+
+              // Time on ground
+              String timeOnGround = snapshot.data['timeOnGround'].toString() ?? 'Time lying on ground not provided';
+
+
               // Unconcious / Not Breathing / Bleeding
               String unconciousNotBreathingBleeding =
               (snapshot.data['unconciousNotBreathingBleeding'] == null)?
@@ -63,8 +70,15 @@ class _SubmitScreenState extends State<SubmitScreen> {
               String hR = (snapshot.data['hR'] == null) ? 'not assessed' : (snapshot.data['hR'].toString() + ' BPM' );
               String bgl = (snapshot.data['bgl'] == null) ? 'not assessed' : (snapshot.data['bgl'].toString() + ' mmol/L');
               String temperature = (snapshot.data['temperature'] == null) ? 'not assessed' : (snapshot.data['temperature'].toString() + '°C');
+              String respRate = (snapshot.data['respRate'] == null) ? 'not assessed' : (snapshot.data['respRate'].toString() + ' bpm');
+              String pupilL = (snapshot.data['pupilLeft'] == null) ? 'not assessed' : snapshot.data['pupilLeft'].toString();
+              String pupilR = (snapshot.data['pupilRight'] == null) ? 'not assessed' : snapshot.data['pupilRight'].toString();
+              String pupilDesc = (snapshot.data['pupilDesc'] == null) ?  '' : snapshot.data['pupilDesc'];
+              String oxygenSaturation = (snapshot.data['oxygenSaturation'] == null) ? 'not assessed' : (snapshot.data['oxygenSaturation'].toString() + ' %');
+
 
               // Injury check
+              String fallWitnessed = (snapshot.data['fallWitnessed'] == null) ?  'Fall Not Witnessed' : snapshot.data['fallWitnessed'] ? 'Fall was witnessed' : 'Fall was not witnessed';
               String hitHead = (snapshot.data['hitHead'] == null) ?  'not assessed' : snapshot.data['hitHead'] ? 'Person hit head' : 'False';
               String nausea = (snapshot.data['nausea'] == null) ?  'not assessed' : snapshot.data['nausea'] ? 'Person complains of nausea.' : 'No Nausea.';
               String vomit = (snapshot.data['vomit'] == null) ?  'not assessed' : snapshot.data['vomit'] ? 'Person vomiting.' : 'No vomiting.';
@@ -74,6 +88,12 @@ class _SubmitScreenState extends State<SubmitScreen> {
               String changConcious = (snapshot.data['changConcious'] == null) ?  'not assessed' : snapshot.data['changConcious'] ? 'Signs of changes to consciousness. Nurse to monitor consciousness.' : 'No signs of changes to consciousness.';
               String antiCoag = (snapshot.data['antiCoag'] == null) ?  'not assessed' : snapshot.data['antiCoag'] ? 'Person is taking anti-coagulants.' : 'Person not currently taking anti-coagulants.';
               String weightBear = (snapshot.data['weightBear'] == null) ?  'not assessed' : snapshot.data['weightBear'] ? 'Person unable to weight bear due to pain.' : 'Person has no pain with weight bearing.';
+
+              // Other information
+              String otherInfo = (snapshot.data['otherInformation'] == null) ?  '' : snapshot.data['otherInformation'];
+
+
+
 
               return SafeArea(
                 child: Stack(
@@ -97,6 +117,33 @@ class _SubmitScreenState extends State<SubmitScreen> {
                             ),
                             Text(
                               name,
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.normal, fontSize: 16),
+                            ),
+
+
+                            if (description != '')
+                            Column(
+                              children: <Widget>[
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text(
+                                  description,
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.normal, fontSize: 16),
+                                ),
+
+                              ],
+                            ),
+
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              timeOnGround,
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                   fontWeight: FontWeight.normal, fontSize: 16),
@@ -235,6 +282,8 @@ class _SubmitScreenState extends State<SubmitScreen> {
                             SizedBox(
                               height: 2,
                             ),
+
+
                             Row(
                               children: <Widget>[
                                 Text(
@@ -274,15 +323,106 @@ class _SubmitScreenState extends State<SubmitScreen> {
                               ],
                             ),
 
-                            if(hitHead != 'not assessed' && hitHead != 'False' )SizedBox(
-                              height: 2,
+                            Row(
+                              children: <Widget>[
+                                Text(
+                                  'Pupils: ',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.normal, fontSize: 16),
+                                ),
+
+                                Text(
+                                  pupilL + '(left) ' + pupilR + ('right'),
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.normal, fontSize: 16),
+                                ),
+                              ],
                             ),
 
-                            if(hitHead != 'not assessed' && hitHead != 'False' )Text(
-                              hitHead,
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.normal, fontSize: 16),
+                            Row(
+                              children: <Widget>[
+                                Text(
+                                  'Pupils description: ',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.normal, fontSize: 16),
+                                ),
+
+                                Text(
+                                  pupilDesc,
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.normal, fontSize: 16),
+                                ),
+                              ],
+                            ),
+
+                            Row(
+                              children: <Widget>[
+                                Text(
+                                  'Respiratory rate: ',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.normal, fontSize: 16),
+                                ),
+
+                                Text(
+                                  respRate,
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.normal, fontSize: 16),
+                                ),
+                              ],
+                            ),
+
+                            Row(
+                              children: <Widget>[
+                                Text(
+                                  'Oxygen saturation: ',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.normal, fontSize: 16),
+                                ),
+
+                                Text(
+                                  oxygenSaturation,
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.normal, fontSize: 16),
+                                ),
+                              ],
+                            ),
+
+
+
+                            Column(
+                              children: <Widget>[
+                                SizedBox(
+                                  height: 2,
+                                ),
+                                Text(
+                                  fallWitnessed,
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.normal, fontSize: 16),
+                                ),
+                              ],
+                            ),
+
+                            if(hitHead != 'not assessed' && hitHead != 'False' )Column(
+                              children: <Widget>[
+                                SizedBox(
+                                  height: 2,
+                                ),
+                                Text(
+                                  hitHead,
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.normal, fontSize: 16),
+                                ),
+                              ],
                             ),
                             SizedBox(
                               height: 2,
@@ -365,6 +505,21 @@ class _SubmitScreenState extends State<SubmitScreen> {
                                   fontWeight: FontWeight.normal, fontSize: 16),
                             ),
 
+
+                            if (otherInfo != '')Column(
+                              children: <Widget>[
+                                SizedBox(
+                                  height: 2,
+                                ),
+                                Text(
+                                  otherInfo,
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.normal, fontSize: 16),
+                                ),
+                              ],
+                            ),
+
                             Container(height: 50,),
 
                             Padding(
@@ -384,6 +539,12 @@ class _SubmitScreenState extends State<SubmitScreen> {
                                       String emailString = 'Fall Summary\n\n\n';
 
                                       emailString = emailString + name + '\n';
+
+                                      emailString = emailString + description + '\n';
+
+                                      emailString = emailString + timeOnGround + '\n';
+
+
 
                                       if (unconciousNotBreathingBleeding != 'not assessed') {
                                         emailString = emailString + unconciousNotBreathingBleeding + '\n';
@@ -410,6 +571,13 @@ class _SubmitScreenState extends State<SubmitScreen> {
                                       emailString = emailString + 'Heart rate: '+ hR +'\n';
                                       emailString = emailString + 'Blood glucose level: '+ bgl +'\n';
                                       emailString = emailString + 'Temperature: '+ temperature +'\n';
+                                      emailString = emailString + 'Pupils: '+ pupilL + '(left) ' + pupilR + ('right') +'\n';
+                                      emailString = emailString + 'Pupil description: ' + pupilDesc + '\n';
+                                      emailString = emailString + 'Respiratory Rate: ' + respRate + '\n';
+                                      emailString = emailString + 'Oxygen saturation: ' + oxygenSaturation + '\n';
+
+                                      emailString = emailString +  fallWitnessed +'\n';
+                                      emailString = emailString +  hitHead +'\n';
                                       emailString = emailString +  nausea +'\n';
                                       emailString = emailString +  vomit +'\n';
                                       emailString = emailString +  sevHeadache +'\n';
@@ -418,6 +586,8 @@ class _SubmitScreenState extends State<SubmitScreen> {
                                       emailString = emailString +  changConcious +'\n';
                                       emailString = emailString +  antiCoag +'\n';emailString = emailString +  changConcious +'\n\n';
                                       emailString = emailString +  weightBear +'\n';
+
+                                      emailString = emailString +  otherInfo +'\n';
 
 
                                       // Create our message.

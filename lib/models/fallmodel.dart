@@ -39,6 +39,9 @@ class FallData with ChangeNotifier{
   bool fallWitnessed;
   String fallDesc;
   int timeOnGround;
+  bool witnessed;
+  String otherInformation;
+  int oxygenSaturation;
 
 
   void setFallID(String text) {
@@ -291,6 +294,21 @@ class FallData with ChangeNotifier{
   int get getTimeOnGround => timeOnGround;
 
 
+  void setOtherInfo(String string) {
+    otherInformation = string;
+    notifyListeners();
+  }
+
+  String get getOtherInfo => otherInformation;
+
+
+  void setOxygenSat(int value) {
+    oxygenSaturation = value;
+    notifyListeners();
+  }
+
+  int get getOxygenSat => oxygenSaturation;
+
 
 
 
@@ -331,6 +349,10 @@ class FallData with ChangeNotifier{
     fallWitnessed = null;
     fallDesc = null;
     timeOnGround = null;
+    witnessed = null;
+    otherInformation = null;
+    oxygenSaturation = null;
+
 
     notifyListeners();
   }

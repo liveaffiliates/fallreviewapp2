@@ -40,6 +40,8 @@ Future<void> updateFirestoreDocument({FallData fallData, String collection, Stri
   'fallWitnessed': fallData.getFallWitnessed,
   'fallDesc': fallData.getFallDesc,
   'timeOnGround': fallData.getTimeOnGround,
+  'otherInformation': fallData.getOtherInfo,
+  'oxygenSaturation' : fallData.getOxygenSat,
   };
 
 

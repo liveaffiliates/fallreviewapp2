@@ -146,10 +146,25 @@ class _VitalSignsCheckScreenState extends State<VitalSignsCheckScreen> {
                     keyboardType: TextInputType.number,
                     autofocus: false,
                     decoration: InputDecoration(
-                        hintText: 'Respitory rate',
+                        hintText: 'Respiratory rate',
                         border: OutlineInputBorder()),
                     onChanged: (text) {
                       fallData.setRespRate(int.tryParse(text));
+                    },
+                  ),
+
+                  SizedBox(
+                    height: 10,
+                  ),
+
+                  TextField(
+                    keyboardType: TextInputType.number,
+                    autofocus: false,
+                    decoration: InputDecoration(
+                        hintText: 'Oxygen Saturatiom',
+                        border: OutlineInputBorder()),
+                    onChanged: (text) {
+                      fallData.setOxygenSat(int.tryParse(text));
                     },
                   ),
 

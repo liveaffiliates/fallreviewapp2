@@ -40,6 +40,19 @@ class _InjuryCheckScreenState extends State<InjuryCheckScreen> {
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
+                    Checkbox(value: fallData.getFallWitnessed ?? false,onChanged: (value){
+                      setState(() {
+                        fallData.setFallWitnessed(value);
+                      });
+                    },),
+                    Text('Unwitnessed fall'),
+                  ],
+                ),
+                SizedBox(height: 8,),
+
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
                     Checkbox(value: fallData.getHitHead ?? false,onChanged: (value){
                       setState(() {
                         fallData.setHitHead(value);
@@ -172,6 +185,7 @@ class _InjuryCheckScreenState extends State<InjuryCheckScreen> {
                         RaisedButton(child: Text('Next'), onPressed: (){
 
                           // If they have not selected the tick boxes set them to false
+                          if(fallData.getFallWitnessed == null){fallData.setFallWitnessed(false);}
                           if(fallData.getHitHead == null){fallData.setHitHead(false);}
                           if(fallData.getNausea == null){fallData.setNausea(false);}
                           if(fallData.getVomit == null){fallData.setVomit(false);}
@@ -235,16 +249,21 @@ class _InjuryCheckScreenState extends State<InjuryCheckScreen> {
                             fallData.getBPDia != null && fallData.getBPSis < 50 ||
                             fallData.getHr != null && fallData.getHr > 100 ||
                             fallData.getHr != null && fallData.getHr < 50 ||
-                            fallData.getAntiCoag && fallData.getHitHead ||
-                            fallData.getNausea && fallData.getHitHead ||
-                            fallData.getVomit && fallData.getHitHead ||
-                            fallData.getSevHeadache && fallData.getHitHead ||
-                            fallData.getNeckPain && fallData.getHitHead
-                          //fallData.getBGL > 7.8 ||
-                          //fallData.getBGL < 4.0 ||
-                          //fallData.getTemperature > 37.9 ||
-                          //fallData.getTemperature < 36.1 ||
-                          //fallData.getPupils
+                            fallData.getAntiCoag != null && fallData.getAntiCoag && fallData.getHitHead != null && fallData.getHitHead ||
+                            fallData.getNausea != null && fallData.getNausea && fallData.getHitHead != null && fallData.getHitHead ||
+                            fallData.getVomit != null && fallData.getVomit ||
+                            fallData.getSevHeadache != null && fallData.getSevHeadache && fallData.getHitHead != null && fallData.getHitHead ||
+                            fallData.getNeckPain != null && fallData.getNeckPain && fallData.getHitHead != null && fallData.getHitHead ||
+                            fallData.getPupilL != null && fallData.getPupilL < 0 || fallData.getPupilR != null && fallData.getPupilR < 0 ||
+                            fallData.getPupilL != null && fallData.getPupilR != null && fallData.getPupilL != fallData.getPupilR ||
+                            fallData.getFallWitnessed != null && !fallData.getFallWitnessed ||
+                            fallData.getRespRate != null && fallData.getRespRate < 12 ||
+                            fallData.getRespRate != null && fallData.getRespRate > 22 ||
+                            fallData.oxygenSaturation != null && fallData.oxygenSaturation < 95 ||
+                            fallData.getBGL != null && fallData.getBGL > 7.8 ||
+                            fallData.getBGL != null && fallData.getBGL < 4.0
+
+
                           ){
                             fallData.setPossibleInjury(true);
                           } else {
@@ -253,7 +272,7 @@ class _InjuryCheckScreenState extends State<InjuryCheckScreen> {
 
 
                           updateFirestoreDocument(collection: 'falls', id: fallData.getFallID, fallData: fallData);
-                          Navigator.pushNamed(context, ResultsScreen.id,);
+                          Navigator.pushNamed(context, OtherInformationScreen.id,);
 
 
 

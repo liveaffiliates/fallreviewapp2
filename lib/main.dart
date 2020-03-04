@@ -51,6 +51,7 @@ class _State extends State<FallReviewApp> {
           VitalSignsCheckScreen.id: (context) => VitalSignsCheckScreen(),
           DisclaimerScreen.id: (context) => DisclaimerScreen(),
           FallDescriptionScreen.id: (context) => FallDescriptionScreen(),
+          OtherInformationScreen.id: (context) => OtherInformationScreen(),
         };
         WidgetBuilder builder = routes[settings.name];
         return MaterialPageRoute(builder: (ctx) => builder(ctx));
