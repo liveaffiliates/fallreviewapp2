@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fallreview/models/fallmodel.dart';
 import 'package:fallreview/database/FireStoreFunctions.dart';
+import 'package:fallreview/database/sembastfunctions.dart';
 
 class UnconciousBreathingBleedingCheckScreen extends StatefulWidget {
   static const String id = 'unconcious_breathing_bleeding_checkScreen';
@@ -88,10 +89,15 @@ class _UnconciousBreathingBleedingCheckScreenState extends State<UnconciousBreat
                         child: Text('No'),
                         onPressed: () {
                           fallData.setUnconciousNotBreathingBleeding(false);
+
                           updateFirestoreDocument(
                               collection: 'falls',
                               id: fallData.getFallID,
                               fallData: fallData);
+
+
+                          editFallInDatabase(fallKey: fallData.getLocalDBID,fallData: fallData.toJson());
+
                           Navigator.pushNamed(
                             context,
                             PersonsNameScreen.id,

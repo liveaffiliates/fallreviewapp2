@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:fallreview/models/fallmodel.dart';
 import 'package:fallreview/database/FireStoreFunctions.dart';
 import 'package:fallreview/screens/allscreens.dart';
+import 'package:fallreview/database/sembastfunctions.dart';
 
 class OtherInformationScreen extends StatefulWidget {
 
@@ -49,6 +50,9 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                     children: <Widget>[
                       RaisedButton(child: Text('Next'), onPressed: (){
                         updateFirestoreDocument(collection: 'falls', id: fallData.getFallID, fallData: fallData);
+
+                        editFallInDatabase(fallKey: fallData.getLocalDBID,fallData: fallData.toJson());
+
                         Navigator.pushNamed(context, ResultsScreen.id,);
 
                       },),

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:fallreview/models/fallmodel.dart';
 import 'package:fallreview/database/FireStoreFunctions.dart';
 import 'package:fallreview/screens/allscreens.dart';
+import 'package:fallreview/database/sembastfunctions.dart';
 
 class FallDescriptionScreen extends StatefulWidget {
   static const String id = 'Fall_Desc_Screen';
@@ -35,7 +36,8 @@ class _FallDescriptionScreenState extends State<FallDescriptionScreen> {
               SizedBox(
                 height: 24,
               ),
-              TextField(
+              TextFormField(
+                initialValue: fallData.getFallDesc ?? null,
                 maxLines: 2,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(), hintText: 'Fall description'),
@@ -46,14 +48,15 @@ class _FallDescriptionScreenState extends State<FallDescriptionScreen> {
               SizedBox(
                 height: 10,
               ),
-              TextField(
+              TextFormField(
+                initialValue: (fallData.getTimeOnGround == null) ? null : fallData.getTimeOnGround.toString(),
                 keyboardType: TextInputType.number,
                 maxLines: 1,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Time lying on the ground (m) '),
                 onChanged: (text) {
-                  fallData.setFallTime(int.tryParse(text));
+                  fallData.setTimeOnGround(int.tryParse(text));
                 },
               ),
               Expanded(child: Container()),
@@ -70,6 +73,10 @@ class _FallDescriptionScreenState extends State<FallDescriptionScreen> {
                               collection: 'falls',
                               id: fallData.getFallID,
                               fallData: fallData);
+
+                          editFallInDatabase(fallKey: fallData.getLocalDBID,fallData: fallData.toJson());
+
+
                           Navigator.pushNamed(
                             context,
                             FractureCheckScreen.id,

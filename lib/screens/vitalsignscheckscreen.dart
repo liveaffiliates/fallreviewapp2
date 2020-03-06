@@ -3,6 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:fallreview/models/fallmodel.dart';
 import 'package:fallreview/database/FireStoreFunctions.dart';
 import 'package:fallreview/screens/allscreens.dart';
+import 'package:fallreview/database/sembastfunctions.dart';
+import 'package:fallreview/uxelements/uxelements.dart';
+import 'package:fallreview/utilities/string.dart';
 
 class VitalSignsCheckScreen extends StatefulWidget {
   static const String id = 'vital_signs_check_screen';
@@ -30,158 +33,51 @@ class _VitalSignsCheckScreenState extends State<VitalSignsCheckScreen> {
             child: Padding(
               padding: const EdgeInsets.only(left: 10.0, right: 10.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   SizedBox(
                     height: 10,
                   ),
                   Text(
-                    'Vital Signs Check?',
+                    'Vital Signs Check',
                     style: TextStyle(
                         fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                  TextField(
-                    keyboardType: TextInputType.number,
-                    autofocus: false,
-                    decoration: InputDecoration(
-                        hintText: 'Blood pressure (systolic/diastolic)',
-                        border: OutlineInputBorder()),
-                    onChanged: (text) {
-                      fallData.setBPSis(int.tryParse(text
-                          .replaceAll(new RegExp(r"\s\b|\b\s"), "")
-                          .split('/')[0]));
-                      fallData.setBPDia(int.tryParse(text
-                          .replaceAll(new RegExp(r"\s\b|\b\s"), "")
-                          .split('/')[1]));
-                    },
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  TextField(
-                    autofocus: false,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                        hintText: 'Heart rate',
-                        border: OutlineInputBorder()),
-                    onChanged: (text) {
-                      fallData.setHr(int.tryParse(text));
-                    },
-                  ),
+                  SizedBox(height: 16),
+                  VitalSignInput(type: Strings.bloodPressure,hintText: Strings.bloodPressureHint,icon: Strings.bloodPressureIcon,),
+                  SizedBox(height: 16),
+                  VitalSignInput(type: Strings.heartRate,hintText: Strings.heartRateHint,icon: Strings.heartRateIcon,),
+                  SizedBox(height: 16),
+                  VitalSignInput(type: Strings.temperature,hintText: Strings.temperatureHint,icon: Strings.temperatureIcon,),
+                  SizedBox(height: 16),
+                  VitalSignInput(type: Strings.pupilLeft,hintText: Strings.pupilLeftHint,icon: Strings.pupilLeftIcon,),
+                  SizedBox(height: 16),
+                  VitalSignInput(type: Strings.pupilRight,hintText: Strings.pupilRightHint,icon: Strings.pupilRightIcon,),
+                  SizedBox(height: 16),
+                  VitalSignInput(type: Strings.pupilDescription,hintText: Strings.pupilDescriptionHint,icon: Strings.pupilDescriptionIcon,),
+                  SizedBox(height: 16),
+                  VitalSignInput(type: Strings.respiratoryRate,hintText: Strings.respiratoryRateHint,icon: Strings.respiratoryRateIcon,),
+                  SizedBox(height: 16),
+                  VitalSignInput(type: Strings.oxygenSaturation,hintText: Strings.oxygenSaturationHint,icon: Strings.oxygenSaturationIcon,),
+                  SizedBox(height: 16),
+                  VitalSignInput(type: Strings.bloodGlucose,hintText: Strings.bloodGlucoseHint,icon: Strings.bloodGlucoseIcon,),
 
-                  SizedBox(
-                    height: 10,
-                  ),
-                  TextField(
-                    autofocus: false,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                        hintText: 'Temperature',
-                        border: OutlineInputBorder()),
-                    onChanged: (text) {
-                      fallData.setTemperature(double.tryParse(text));
-                    },
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
 
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
 
-                    children: <Widget>[
 
-                      Expanded(
-                        child: TextField(
-                          keyboardType: TextInputType.number,
-                          autofocus: false,
-                          decoration: InputDecoration(
-                              hintText: 'Pupil Left',
-                              border: OutlineInputBorder()),
-                          onChanged: (text) {
-                            fallData.setPupilL(int.tryParse(text));
-                          },
-                        ),
-                      ),
 
-                      SizedBox(width: 10,),
 
-                      Expanded(
-                        child: TextField(
-                          keyboardType: TextInputType.number,
-                          autofocus: false,
-                          decoration: InputDecoration(
-                              hintText: 'Pupil Right',
-                              border: OutlineInputBorder()),
-                          onChanged: (text) {
-                            fallData.setPupilR(int.tryParse(text));
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
 
-                  SizedBox(
-                    height: 10,
-                  ),
 
-                  TextField(
-                    autofocus: false,
-                    decoration: InputDecoration(
-                        hintText: 'Pupil description',
-                        border: OutlineInputBorder()),
-                    onChanged: (text) {
-                      fallData.setLPupilDesc(text);
-                    },
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
 
-                  TextField(
-                    keyboardType: TextInputType.number,
-                    autofocus: false,
-                    decoration: InputDecoration(
-                        hintText: 'Respiratory rate',
-                        border: OutlineInputBorder()),
-                    onChanged: (text) {
-                      fallData.setRespRate(int.tryParse(text));
-                    },
-                  ),
 
-                  SizedBox(
-                    height: 10,
-                  ),
 
-                  TextField(
-                    keyboardType: TextInputType.number,
-                    autofocus: false,
-                    decoration: InputDecoration(
-                        hintText: 'Oxygen Saturatiom',
-                        border: OutlineInputBorder()),
-                    onChanged: (text) {
-                      fallData.setOxygenSat(int.tryParse(text));
-                    },
-                  ),
 
-                  SizedBox(
-                    height: 10,
-                  ),
 
-                  TextField(
-                    keyboardType: TextInputType.number,
-                    autofocus: false,
-                    decoration: InputDecoration(
-                        hintText: 'Blood glucose',
-                        border: OutlineInputBorder()),
-                    onChanged: (text) {
-                      fallData.setBGL(double.tryParse(text));
-                    },
-                  ),
+
+
+
 
 
                     Padding(
@@ -195,6 +91,9 @@ class _VitalSignsCheckScreenState extends State<VitalSignsCheckScreen> {
                                 collection: 'falls',
                                 id: fallData.getFallID,
                                 fallData: fallData);
+
+                            editFallInDatabase(fallKey: fallData.getLocalDBID,fallData: fallData.toJson());
+
                             Navigator.pushNamed(
                               context,
                               InjuryCheckScreen.id,
@@ -203,10 +102,7 @@ class _VitalSignsCheckScreenState extends State<VitalSignsCheckScreen> {
                         ),
                       ),
                     ),
-
-
-
-                ],
+               ],
               ),
             ),
           ),

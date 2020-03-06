@@ -1,8 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fallreview/models/fallmodel.dart';
 import 'package:fallreview/database/FireStoreFunctions.dart';
 import 'package:fallreview/screens/allscreens.dart';
+import 'package:fallreview/database/sembastfunctions.dart';
+import 'package:fallreview/uxelements/uxelements.dart';
+import 'package:fallreview/utilities/string.dart';
 
 class FractureCheckScreen extends StatefulWidget {
   static const String id = 'fracture_check_screen';
@@ -25,295 +29,27 @@ class _FractureCheckScreenState extends State<FractureCheckScreen> {
           child: Padding(
             padding: const EdgeInsets.only(left: 10.0, right: 10.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 SizedBox(
                   height: 16,
                 ),
+
                 Text(
                   'Do you suspect a fracture?',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(
-                  height: 24,
-                ),
-                Text(
-                  'Do they have pain?',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    RaisedButton(
-                      color: (fallData.getPain == true)
-                          ? Colors.black
-                          : Colors.white,
-                      child: Center(
-                          child: (Text(
-                        'Yes',
-                        style: TextStyle(
-                          color: (fallData.getPain == true)
-                              ? Colors.white
-                              : Colors.black,
-                        ),
-                      ))),
-                      onPressed: () {
-                        setState(() {
-                          fallData.setPain(true);
-                        });
-                      },
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    RaisedButton(
-                      color: (fallData.getPain == false)
-                          ? Colors.black
-                          : Colors.white,
-                      child: Center(
-                          child: (Text(
-                        'No',
-                        style: TextStyle(
-                          color: (fallData.getPain == false)
-                              ? Colors.white
-                              : Colors.black,
-                        ),
-                      ))),
-                      onPressed: () {
-                        setState(() {
-                          fallData.setPain(false);
-                        });
-                      },
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                TextField(
-                  autofocus: false,
-                  decoration: InputDecoration(
-                      hintText: 'Details...', border: OutlineInputBorder()),
-                  onChanged: (text) {
-                    fallData.setPainDesc(text);
-                  },
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'Bony tenderness on palpation?',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    RaisedButton(
-                      color: (fallData.getBonyTenderness == true)
-                          ? Colors.black
-                          : Colors.white,
-                      child: Center(
-                          child: (Text(
-                        'Yes',
-                        style: TextStyle(
-                          color: (fallData.getBonyTenderness == true)
-                              ? Colors.white
-                              : Colors.black,
-                        ),
-                      ))),
-                      onPressed: () {
-                        setState(() {
-                          fallData.setBonyTenderness(true);
-                        });
-                      },
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    RaisedButton(
-                      color: (fallData.getBonyTenderness == false)
-                          ? Colors.black
-                          : Colors.white,
-                      child: Center(
-                          child: (Text(
-                        'No',
-                        style: TextStyle(
-                          color: (fallData.getBonyTenderness == false)
-                              ? Colors.white
-                              : Colors.black,
-                        ),
-                      ))),
-                      onPressed: () {
-                        setState(() {
-                          fallData.setBonyTenderness(false);
-                        });
-                      },
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                TextField(
-                  autofocus: false,
-                  decoration: InputDecoration(
-                      hintText: 'Details...', border: OutlineInputBorder()),
-                  onChanged: (text) {
-                    fallData.setBonyTendernessDesc(text);
-                  },
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'Increase in pain with movement?',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    RaisedButton(
-                      color: (fallData.getChangePainWithMovement == true)
-                          ? Colors.black
-                          : Colors.white,
-                      child: Center(
-                          child: (Text(
-                        'Yes',
-                        style: TextStyle(
-                          color: (fallData.getChangePainWithMovement == true)
-                              ? Colors.white
-                              : Colors.black,
-                        ),
-                      ))),
-                      onPressed: () {
-                        setState(() {
-                          fallData.setchangePainWithMovement(true);
-                        });
-                      },
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    RaisedButton(
-                      color: (fallData.getChangePainWithMovement == false)
-                          ? Colors.black
-                          : Colors.white,
-                      child: Center(
-                          child: (Text(
-                        'No',
-                        style: TextStyle(
-                          color: (fallData.getChangePainWithMovement == false)
-                              ? Colors.white
-                              : Colors.black,
-                        ),
-                      ))),
-                      onPressed: () {
-                        setState(() {
-                          fallData.setchangePainWithMovement(false);
-                        });
-                      },
-                    )
-                  ],
-                ),
 
-                SizedBox(
-                  height: 10,
-                ),
+                FractureCheckInput(title: 'Do the have pain?',type: Strings.pain),
 
-                TextField(
-                  autofocus: false,
-                  decoration: InputDecoration(
-                      hintText: 'Details', border: OutlineInputBorder()),
-                  onChanged: (text) {
-                    fallData.setChangeLimbMovementDesc(text);
-                  },
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'Limb shortening or deformity?',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    RaisedButton(
-                      color: (fallData.getLimbShort == true)
-                          ? Colors.black
-                          : Colors.white,
-                      child: Center(
-                          child: (Text(
-                        'Yes',
-                        style: TextStyle(
-                          color: (fallData.getLimbShort == true)
-                              ? Colors.white
-                              : Colors.black,
-                        ),
-                      ))),
-                      onPressed: () {
-                        setState(() {
-                          fallData.setLimbShort(true);
-                        });
-                      },
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    RaisedButton(
-                      color: (fallData.getLimbShort == false)
-                          ? Colors.black
-                          : Colors.white,
-                      child: Center(
-                          child: (Text(
-                        'No',
-                        style: TextStyle(
-                          color: (fallData.getLimbShort == false)
-                              ? Colors.white
-                              : Colors.black,
-                        ),
-                      ))),
-                      onPressed: () {
-                        setState(() {
-                          fallData.setLimbShort(false);
-                        });
-                      },
-                    )
-                  ],
-                ),
+                FractureCheckInput(title: 'Bony tenderness on palpation?',type: Strings.bonyTenderness,),
 
-                SizedBox(
-                  height: 10,
-                ),
+                FractureCheckInput(title: 'Increase in pain with movement?',type: Strings.painWithMovement,),
 
-                TextField(
-                  autofocus: false,
-                  decoration: InputDecoration(
-                      hintText: 'Details', border: OutlineInputBorder()),
-                  onChanged: (text) {
-                    fallData.setLimbShortDesc(text);
-                  },
-                ),
-                SizedBox(
-                  height: 20,
-                ),
+                FractureCheckInput(title: 'Limb shortening or deformity?',type: Strings.limbShortening,),
+
+
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10.0),
                   child: Align(
@@ -325,6 +61,8 @@ class _FractureCheckScreenState extends State<FractureCheckScreen> {
                             collection: 'falls',
                             id: fallData.getFallID,
                             fallData: fallData);
+
+                        editFallInDatabase(fallKey: fallData.getLocalDBID,fallData: fallData.toJson());
 
                         Navigator.pushNamed(
                           context,

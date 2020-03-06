@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:fallreview/models/fallmodel.dart';
 import 'package:fallreview/database/FireStoreFunctions.dart';
 import 'package:fallreview/screens/allscreens.dart';
+import 'package:fallreview/database/sembastfunctions.dart';
 
 
 class InjuryCheckScreen extends StatefulWidget {
@@ -40,11 +41,18 @@ class _InjuryCheckScreenState extends State<InjuryCheckScreen> {
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Checkbox(value: fallData.getFallWitnessed ?? false,onChanged: (value){
-                      setState(() {
-                        fallData.setFallWitnessed(value);
-                      });
-                    },),
+
+                    InkWell(
+                      child: Checkbox(value: true, onChanged: (fallData.getFallWitnessed == null || fallData.getFallWitnessed == false) ? null : (value){
+
+                      },),
+                      onTap: (){
+                        setState(() {
+                          fallData.setFallWitnessed ((fallData.getFallWitnessed == null ||  fallData.getFallWitnessed == false) ? true : false);
+                          print(fallData.getFallWitnessed);
+                        });
+                      },
+                    ),
                     Text('Unwitnessed fall'),
                   ],
                 ),
@@ -272,6 +280,10 @@ class _InjuryCheckScreenState extends State<InjuryCheckScreen> {
 
 
                           updateFirestoreDocument(collection: 'falls', id: fallData.getFallID, fallData: fallData);
+
+                          editFallInDatabase(fallKey: fallData.getLocalDBID,fallData: fallData.toJson());
+
+
                           Navigator.pushNamed(context, OtherInformationScreen.id,);
 
 

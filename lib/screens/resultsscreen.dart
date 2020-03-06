@@ -242,7 +242,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                       child: Text('Summary'),
                       onPressed: () {
                         Navigator.pushNamed(context, SubmitScreen.id,
-                            arguments: fallData.getFallID);
+                            arguments: fallData.getLocalDBID);
                       },
                     ),
                   ],

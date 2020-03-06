@@ -5,6 +5,7 @@ import 'package:fallreview/models/fallmodel.dart';
 Future<void> updateFirestoreDocument({FallData fallData, String collection, String id}) {
 
   Map<String, dynamic> data = {
+  'localDBID' : fallData.getLocalDBID,
   'fallId': fallData.getFallID,
   'name': fallData.getName,
   'fallTime': fallData.getFallTime,

@@ -1,12 +1,12 @@
 import 'package:fallreview/screens/allscreens.dart';
+import 'package:fallreview/utilities/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fallreview/models/fallmodel.dart';
 import 'package:fallreview/database/FireStoreFunctions.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uuid/uuid.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:fallreview/database/sembastfunctions.dart';
 
 class HomeScreen extends StatefulWidget {
 
@@ -25,28 +25,32 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final fallData = Provider.of<FallData>(context, listen: true);
 
-
+  List<FallData> falls;
 
     return Scaffold(
       appBar: AppBar(title: Center(child: Text('Home')),),
       body: Stack(
         children: <Widget>[
-          StreamBuilder<Object>(
-            stream: Firestore.instance.collection('falls').snapshots(),
+          FutureBuilder<Object>(
+            future: getFallsFromDatabase(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
 
-              if (snapshot.connectionState == ConnectionState.active && snapshot.hasData) {
+              if (snapshot.hasData) {
+
+                falls = snapshot.data;
 
                 return ListView.builder(
-                    itemCount: snapshot.data.documents.length,
+                    itemCount: falls.length,
                     itemBuilder: (BuildContext context, int index){
-                      String id = snapshot.data.documents[index]['fallId'];
-                      String name = snapshot.data.documents[index]['name'] ?? 'No name provided';
-                      int fallTime = snapshot.data.documents[index]['fallTime'];
-                      var date = new DateTime.fromMillisecondsSinceEpoch(fallTime);
-                      final f = new DateFormat('dd/MM/yyyy HH:MM');
-                      String fallDateTimString = f.format(date);
-                      String fallId = snapshot.data.documents[index].documentID.toString();
+
+                      FallData fall = falls[index];
+
+                      int localDBID = fall.getLocalDBID;
+                      String name = fall.getName ?? 'No name provided';
+
+
+                      String dateTimeOfFall = epochIntToDateString(epochInt: fall.getFallTime);
+
 
                   return Padding(
                     padding: const EdgeInsets.all(4.0),
@@ -64,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             icon: Icons.delete,
                             onTap: () async  {
 
-                              await deleteDocument('falls', id).then((onValue){
+                              await deleteFallFromDatabase(fallKey: localDBID).then((_){
                                 setState(()  {
 
                                 });
@@ -88,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       children: <Widget>[
                                         Text(name, style: TextStyle(fontWeight: FontWeight.normal, fontSize: 18),),
                                         SizedBox(height: 6,),
-                                        Text(fallDateTimString, style: TextStyle(fontWeight: FontWeight.normal, color: Colors.grey),),
+                                        Text(dateTimeOfFall, style: TextStyle(fontWeight: FontWeight.normal, color: Colors.grey),),
                                       ],
                                     ),
                                   ),
@@ -99,8 +103,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           onTap: (){
+
+
                             Navigator.pushNamed(context, SubmitScreen.id,
-                                arguments: fallId);
+                                arguments: localDBID);
                           },
                         ),
                       ),
@@ -132,15 +138,24 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                  onPressed: (){
+                  onPressed: () async{
 
+                    // Clear the fall model
                     fallData.clearFallModel();
 
+                    // Create an id for the Firestore anonymized data
                     var uuid = new Uuid();
+
+                    // Add the the firestroe id and time of fall creation to firestore
                     fallData.setFallID(uuid.v4());
                     fallData.setFallTime(DateTime.now().millisecondsSinceEpoch);
 
-                    updateFirestoreDocument(collection: 'falls', id: fallData.getFallID, fallData: fallData);
+                    // Write the isolation to the local database
+                    await writeFallToDatabase(fallData: fallData.toJson()).then((localDBID){
+                      fallData.setLocalDBID(localDBID);
+                    });
+
+                    await updateFirestoreDocument(collection: 'falls', id: fallData.getFallID, fallData: fallData);
 
                     Navigator.pushNamed(context, UnconciousBreathingBleedingCheckScreen.id,);
 

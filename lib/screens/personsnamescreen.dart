@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:fallreview/models/fallmodel.dart';
 import 'package:fallreview/database/FireStoreFunctions.dart';
 import 'package:fallreview/screens/allscreens.dart';
+import 'package:fallreview/database/sembastfunctions.dart';
 
 class PersonsNameScreen extends StatefulWidget {
 
@@ -30,7 +31,8 @@ class _PersonsNameScreenState extends State<PersonsNameScreen> {
               SizedBox(height: 16,),
               Text('What is the persons name?', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
               SizedBox(height: 24,),
-              TextField(
+              TextFormField(
+                initialValue: fallData.getName ?? null,
                 decoration: InputDecoration(border: OutlineInputBorder(),hintText: 'Name'),
                 onChanged: (text){
                   fallData.setName(text);
@@ -46,6 +48,10 @@ class _PersonsNameScreenState extends State<PersonsNameScreen> {
                     children: <Widget>[
                       RaisedButton(child: Text('Next'), onPressed: (){
                         updateFirestoreDocument(collection: 'falls', id: fallData.getFallID, fallData: fallData);
+
+                        editFallInDatabase(fallKey: fallData.getLocalDBID,fallData: fallData.toJson());
+
+
                         Navigator.pushNamed(context, FallDescriptionScreen.id,);
 
                       },),
