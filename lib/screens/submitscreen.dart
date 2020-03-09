@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fallreview/screens/allscreens.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
@@ -8,6 +7,7 @@ import 'package:fallreview/database/sembastfunctions.dart';
 import 'package:fallreview/models/fallmodel.dart';
 import 'package:fallreview/utilities/utilities.dart';
 import 'package:provider/provider.dart';
+import 'package:fallreview/utilities/colors.dart';
 
 class SubmitScreen extends StatefulWidget {
   final int localDBID;
@@ -26,12 +26,13 @@ class _SubmitScreenState extends State<SubmitScreen> {
   @override
   Widget build(BuildContext context) {
 
+    var padding = MediaQuery.of(context).padding.top;
+    var totalHeight = MediaQuery.of(context).size.height;
+    var adjustedHeight = totalHeight - padding - kToolbarHeight;
+
     final fallData = Provider.of<FallData>(context, listen: true);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Fall Report'),
-      ),
       body: FutureBuilder<Object>(
           future: getSingleRecordFromDatabase(key: widget.localDBID),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -184,20 +185,16 @@ class _SubmitScreenState extends State<SubmitScreen> {
                             SizedBox(
                               height: 20,
                             ),
+
                             Row(
                               mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Text(
-                                  'Confirm fall information',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
-                                ),
+                                Expanded(child: Container()),
                                 InkWell(
-                                  child: Icon(
-                                    Icons.edit,
-                                    size: 30,
+                                  child: Image.asset(
+                                    'assets/pencil.png',
+                                    width: 40,
+                                    height: 40,
                                   ),
                                   onTap: () {
                                     fallData.setCompleteFallInformation(fall);
@@ -209,15 +206,49 @@ class _SubmitScreenState extends State<SubmitScreen> {
                                 ),
                               ],
                             ),
+
+                            Center(
+                              child: Text(
+                                'Fall Report',
+                                style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+
                             SizedBox(
                               height: 20,
                             ),
-                            Text(
-                              'Name: ' + name,
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.normal, fontSize: 16),
+
+                            Center(
+                              child: Text(
+                                'Confirm fall information',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ),
+
+
+                            SizedBox(
+                              height: 20,
+                            ),
+
+
+                            Center(
+                              child: Text(
+                                name,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+
+                                    fontWeight: FontWeight.normal, fontSize: 20),
+                              ),
+                            ),
+
+                            SizedBox(
+                              height: 20,
+                            ),
+
                             Text(
                               'Fall date and time: ' + fallDateTime,
                               textAlign: TextAlign.left,
@@ -594,8 +625,8 @@ class _SubmitScreenState extends State<SubmitScreen> {
                                 alignment: Alignment.bottomCenter,
                                 child: (Column(
                                   children: <Widget>[
-                                    RaisedButton(
-                                      child: Text('Submit'),
+                                    RaisedButton(color: mainColor,
+                                      child: Text('Submit', style: TextStyle(color: Colors.white),),
                                       onPressed: () async {
                                         String username =
                                             'fallsreview@gmail.com';
@@ -774,7 +805,7 @@ class _SubmitScreenState extends State<SubmitScreen> {
                 ),
               );
             } else {
-              return CircularProgressIndicator();
+              return Center(child: CircularProgressIndicator());
             }
           }),
     );

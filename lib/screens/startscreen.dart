@@ -7,6 +7,8 @@ import 'package:fallreview/database/FireStoreFunctions.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:fallreview/database/sembastfunctions.dart';
+import 'package:fallreview/utilities/colors.dart';
+import 'package:fallreview/uxelements/appbar.dart';
 
 class HomeScreen extends StatefulWidget {
 
@@ -18,19 +20,25 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-
+  bool nextPressed = false;
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
 
-  final fallData = Provider.of<FallData>(context, listen: true);
+    var padding = MediaQuery.of(context).padding.top;
+    var totalHeight = MediaQuery.of(context).size.height;
+    var adjustedHeight = totalHeight - padding - kToolbarHeight;
 
-  List<FallData> falls;
+    final fallData = Provider.of<FallData>(context, listen: true);
+
+    List<FallData> falls;
 
     return Scaffold(
-      appBar: AppBar(title: Center(child: Text('Home')),),
+      appBar: CustomAppBar('Home'),
       body: Stack(
         children: <Widget>[
+
           FutureBuilder<Object>(
             future: getFallsFromDatabase(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -39,106 +47,115 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 falls = snapshot.data;
 
-                return ListView.builder(
-                    itemCount: falls.length,
-                    itemBuilder: (BuildContext context, int index){
+                if ((falls.length) > 0){
+                  return ListView.builder(
+                      itemCount: falls.length,
+                      itemBuilder: (BuildContext context, int index){
 
-                      FallData fall = falls[index];
+                        FallData fall = falls[index];
+                        int localDBID = fall.getLocalDBID;
+                        String name = fall.getName ?? 'No name provided';
 
-                      int localDBID = fall.getLocalDBID;
-                      String name = fall.getName ?? 'No name provided';
+                        String dateTimeOfFall = epochIntToDateString(epochInt: fall.getFallTime);
 
+                        return Container(
+                          width: double.infinity,
+                          height: 100,
+                          child: Slidable(
+                            actionPane: SlidableDrawerActionPane(),
+                            actionExtentRatio: 0.25,
+                            key: UniqueKey(),
+                            actions: <Widget>[
+                              IconSlideAction(
+                                caption: 'Delete',
+                                color: Colors.red,
+                                icon: Icons.delete,
+                                onTap: () async  {
 
-                      String dateTimeOfFall = epochIntToDateString(epochInt: fall.getFallTime);
+                                  await deleteFallFromDatabase(fallKey: localDBID).then((_){
+                                    setState(()  {
 
+                                    });
 
-                  return Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Container(
-                      width: double.infinity,
-                      height: 100,
-                      child: Slidable(
-                        actionPane: SlidableDrawerActionPane(),
-                        actionExtentRatio: 0.25,
-                        key: UniqueKey(),
-                        actions: <Widget>[
-                          IconSlideAction(
-                            caption: 'Delete',
-                            color: Colors.red,
-                            icon: Icons.delete,
-                            onTap: () async  {
-
-                              await deleteFallFromDatabase(fallKey: localDBID).then((_){
-                                setState(()  {
-
-                                });
-
-                              });
-                            },
-                          ),
-                        ],
-
-                        child: InkWell(
-                          child: Card(
-                            elevation: 10,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text(name, style: TextStyle(fontWeight: FontWeight.normal, fontSize: 18),),
-                                        SizedBox(height: 6,),
-                                        Text(dateTimeOfFall, style: TextStyle(fontWeight: FontWeight.normal, color: Colors.grey),),
-                                      ],
-                                    ),
-                                  ),
-                                  Icon(Icons.arrow_forward_ios, size: 16,),
-                                  SizedBox(width: 10,)
-                                ],
+                                  });
+                                },
                               ),
+                            ],
+
+                            child: InkWell(
+                              child: Card(
+                                elevation: 1,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left:8.0, right: 8.0),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Expanded(
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Text(name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
+                                            SizedBox(height: 6,),
+                                            Text(dateTimeOfFall, style: TextStyle(fontWeight: FontWeight.normal, color: Colors.grey),),
+                                          ],
+                                        ),
+                                      ),
+                                      Icon(Icons.arrow_forward_ios, size: 16,),
+                                      SizedBox(width: 10,)
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              onTap: (){
+                                Navigator.pushNamed(context, SubmitScreen.id,
+                                    arguments: localDBID);
+                              },
                             ),
                           ),
-                          onTap: (){
+                        );
+                      });
+
+                } else {
+
+                  return Center(child: Container(width: 200, child: Text('No falls added yet, click the plus icon to start', textAlign: TextAlign.center, style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal, color: Colors.black,),)),
+                 );
+
+                }
 
 
-                            Navigator.pushNamed(context, SubmitScreen.id,
-                                arguments: localDBID);
-                          },
-                        ),
-                      ),
-                    ),
-                  );
-                });
               } else {
                 return Center(child: CircularProgressIndicator());
               }
 
             }
+
+
           ),
 
 
           Padding(
-            padding: const EdgeInsets.only(bottom: 16),
+            padding: const EdgeInsets.only(bottom: 20),
             child: Align(
               alignment: Alignment.bottomCenter,
-              child: Container(
-                height: 50,
-                width: 150,
-                child: RaisedButton(
-                  child: Center(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Icon(Icons.add),
-                      Text('Add fall')
-                    ],
-                  ),
+              child: FloatingActionButton(
+                backgroundColor: mainColor,
+                child: Center(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Icon(Icons.add),
+                  ],
                 ),
-                  onPressed: () async{
+              ),
+                onPressed: () async{
+
+                  if (!nextPressed){
+
+                    setState(() {
+                      loading = true;
+                      nextPressed = true;
+                    });
+
 
                     // Clear the fall model
                     fallData.clearFallModel();
@@ -157,13 +174,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     await updateFirestoreDocument(collection: 'falls', id: fallData.getFallID, fallData: fallData);
 
-                    Navigator.pushNamed(context, UnconciousBreathingBleedingCheckScreen.id,);
+                    setState(() {
+                      loading = false;
+                      nextPressed = false;
+                    });
 
-                  },
-                ),
+                    Navigator.pushNamed(context, UnconciousBreathingBleedingCheckScreen.id,);
+                  }
+                },
               ),
             ),
-          )
+          ),
+
+          if(loading)Center(child: CircularProgressIndicator()),
         ],
       ),
     );

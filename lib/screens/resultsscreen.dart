@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fallreview/models/fallmodel.dart';
 import 'package:fallreview/screens/allscreens.dart';
+import 'package:fallreview/utilities/colors.dart';
+import 'package:fallreview/uxelements/uxelements.dart';
 
 class ResultsScreen extends StatefulWidget {
   static const String id = 'results_screen';
@@ -13,6 +15,11 @@ class ResultsScreen extends StatefulWidget {
 class _ResultsScreenState extends State<ResultsScreen> {
   @override
   Widget build(BuildContext context) {
+
+    var padding = MediaQuery.of(context).padding.top;
+    var totalHeight = MediaQuery.of(context).size.height;
+    var adjustedHeight = totalHeight - padding - kToolbarHeight;
+
     final fallData = Provider.of<FallData>(context, listen: true);
 
     return Scaffold(
@@ -54,7 +61,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                     if (fallData.getPossibleInjury != null &&
                         fallData.getPossibleInjury)
                       Text(
-                        'Possible injury',
+                        'Possible injury!',
                         style: TextStyle(
                             fontSize: 36,
                             fontWeight: FontWeight.bold,
@@ -74,7 +81,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                     if (fallData.getSuspectedFracture != null &&
                         fallData.getSuspectedFracture)
                       Text(
-                        'Suspect fracture',
+                        'Suspect fracture!',
                         style: TextStyle(
                             fontSize: 36,
                             fontWeight: FontWeight.bold,
@@ -232,22 +239,11 @@ class _ResultsScreenState extends State<ResultsScreen> {
               ),
             ),
             Expanded(child: Container()),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10.0),
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: (Column(
-                  children: <Widget>[
-                    RaisedButton(
-                      child: Text('Summary'),
-                      onPressed: () {
-                        Navigator.pushNamed(context, SubmitScreen.id,
-                            arguments: fallData.getLocalDBID);
-                      },
-                    ),
-                  ],
-                )),
-              ),
+            BottomButton(
+              text: 'Summary',
+              route: SubmitScreen.id,
+              updateDatabase: false,
+              finalScreen: false,
             ),
           ],
         ),

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:fallreview/models/fallmodel.dart';
 import 'package:fallreview/database/FireStoreFunctions.dart';
 import 'package:fallreview/database/sembastfunctions.dart';
+import 'package:fallreview/utilities/colors.dart';
 
 class UnconciousBreathingBleedingCheckScreen extends StatefulWidget {
   static const String id = 'unconcious_breathing_bleeding_checkScreen';
@@ -15,10 +16,17 @@ class UnconciousBreathingBleedingCheckScreen extends StatefulWidget {
 class _UnconciousBreathingBleedingCheckScreenState extends State<UnconciousBreathingBleedingCheckScreen> {
   @override
   Widget build(BuildContext context) {
+
+    var padding = MediaQuery.of(context).padding.top;
+    var totalHeight = MediaQuery.of(context).size.height;
+    var adjustedHeight = totalHeight - padding - kToolbarHeight;
+
+
     final fallData = Provider.of<FallData>(context, listen: true);
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: mainColor,
         title: Text('Fall Report'),
       ),
       body: SafeArea(
@@ -69,7 +77,8 @@ class _UnconciousBreathingBleedingCheckScreenState extends State<UnconciousBreat
                   child: (Column(
                     children: <Widget>[
                       RaisedButton(
-                        child: Text('Yes or unsure'),
+                        color: Colors.red,
+                        child: Text('Yes or unsure', style: TextStyle(color: Colors.white),),
                         onPressed: () {
                           fallData.setUnconciousNotBreathingBleeding(true);
                           updateFirestoreDocument(
@@ -86,7 +95,8 @@ class _UnconciousBreathingBleedingCheckScreenState extends State<UnconciousBreat
                         height: 10,
                       ),
                       RaisedButton(
-                        child: Text('No'),
+                        color: mainColor,
+                        child: Text('No', style: TextStyle(color: Colors.white),),
                         onPressed: () {
                           fallData.setUnconciousNotBreathingBleeding(false);
 

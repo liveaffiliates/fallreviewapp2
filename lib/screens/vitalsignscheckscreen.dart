@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:fallreview/models/fallmodel.dart';
-import 'package:fallreview/database/FireStoreFunctions.dart';
 import 'package:fallreview/screens/allscreens.dart';
-import 'package:fallreview/database/sembastfunctions.dart';
 import 'package:fallreview/uxelements/uxelements.dart';
 import 'package:fallreview/utilities/string.dart';
+import 'package:fallreview/utilities/colors.dart';
 
 class VitalSignsCheckScreen extends StatefulWidget {
   static const String id = 'vital_signs_check_screen';
@@ -17,16 +14,19 @@ class VitalSignsCheckScreen extends StatefulWidget {
 class _VitalSignsCheckScreenState extends State<VitalSignsCheckScreen> {
   @override
   Widget build(BuildContext context) {
-    final fallData = Provider.of<FallData>(context, listen: true);
+
+    var padding = MediaQuery.of(context).padding.top;
+    var totalHeight = MediaQuery.of(context).size.height;
+    var adjustedHeight = totalHeight - padding - kToolbarHeight;
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: mainColor,
         title: Text('Fall Report'),
       ),
       body: Container(
         width: double.infinity,
         height: double.infinity,
-
 
         child: SingleChildScrollView(
           child: SafeArea(
@@ -62,47 +62,15 @@ class _VitalSignsCheckScreenState extends State<VitalSignsCheckScreen> {
                   VitalSignInput(type: Strings.oxygenSaturation,hintText: Strings.oxygenSaturationHint,icon: Strings.oxygenSaturationIcon,),
                   SizedBox(height: 16),
                   VitalSignInput(type: Strings.bloodGlucose,hintText: Strings.bloodGlucoseHint,icon: Strings.bloodGlucoseIcon,),
+                  SizedBox(height: 20,),
+                  BottomButton(
+                    text: 'Next',
+                    route: InjuryCheckScreen.id,
+                    updateDatabase: true,
+                    finalScreen: false,
+                  ),
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    Padding(
-                      padding: const EdgeInsets.only(top:16, bottom: 16.0),
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: RaisedButton(
-                          child: Text('Next'),
-                          onPressed: () {
-                            updateFirestoreDocument(
-                                collection: 'falls',
-                                id: fallData.getFallID,
-                                fallData: fallData);
-
-                            editFallInDatabase(fallKey: fallData.getLocalDBID,fallData: fallData.toJson());
-
-                            Navigator.pushNamed(
-                              context,
-                              InjuryCheckScreen.id,
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-               ],
+                ],
               ),
             ),
           ),

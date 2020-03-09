@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fallreview/models/fallmodel.dart';
+import 'package:fallreview/models/FeedbackModel.dart';
 
 
 Future<void> updateFirestoreDocument({FallData fallData, String collection, String id}) {
@@ -7,7 +8,7 @@ Future<void> updateFirestoreDocument({FallData fallData, String collection, Stri
   Map<String, dynamic> data = {
   'localDBID' : fallData.getLocalDBID,
   'fallId': fallData.getFallID,
-  'name': fallData.getName,
+  //'name': fallData.getName,
   'fallTime': fallData.getFallTime,
   'unconciousNotBreathingBleeding': fallData.getUnconciousNotBreathingBleeding,
   'hitHead': fallData.getHitHead,
@@ -74,6 +75,20 @@ Future<void> deleteDocument(String collection, String documentID) async{
       .collection(collection)
       .document(documentID)
       .delete();
+
+
+}
+
+
+void sendFeedbackEmail(FeedbackModel model) async {
+  await Firestore.instance.collection('email').document()
+      .setData({   'to': 'nickmuir@y7mail.com',
+    'message': {
+      'subject': 'Feedback has been recieved',
+      'html':
+      'Feedback : ' + model.feedbackSuggestion,
+    } });
+
 }
 
 

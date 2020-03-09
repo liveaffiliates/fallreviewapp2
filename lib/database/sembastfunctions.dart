@@ -42,7 +42,7 @@ Future<int> writeFallToDatabase({@required Map<String, dynamic> fallData}) async
   return key;
 }
 
-void editFallInDatabase({@required Map<String, dynamic> fallData, int fallKey}) async{
+Future <bool> editFallInDatabase({@required Map<String, dynamic> fallData, int fallKey}) async{
   // File path to a file in the current directory
   String dbPath = await getWorkingDirectory() + 'summarise.db';
 
@@ -59,6 +59,8 @@ void editFallInDatabase({@required Map<String, dynamic> fallData, int fallKey}) 
 
   // Update the data in the record
   await record.update(db, {'fall': fallData});
+
+  return true;
 }
 
 Future <List<FallData>> getFallsFromDatabase() async{
