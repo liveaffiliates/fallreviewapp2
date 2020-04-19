@@ -744,7 +744,7 @@ class _SubmitScreenState extends State<SubmitScreen> {
                                         final message = Message()
                                           ..from =
                                               Address(username, 'SummaRise App')
-                                          //..recipients.add('daniel@hughealth.com.au')
+                                          ..recipients.add('daniel@hughealth.com.au')
                                           ..recipients
                                               .add('nickmuir@y7mail.com')
                                           ..subject = 'New Fall Summary'

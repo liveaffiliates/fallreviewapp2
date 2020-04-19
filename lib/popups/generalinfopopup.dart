@@ -44,7 +44,7 @@ class GeneralnfoPopupState extends State<GeneralnfoPopup>
                     borderRadius: BorderRadius.circular(15.0))),
             child: Padding(
               padding: const EdgeInsets.all(50.0),
-              child: Text(widget.messageString),
+              child: Text(widget.messageString, textAlign: TextAlign.center,),
             ),
           ),
         ),

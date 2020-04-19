@@ -5,6 +5,9 @@ import 'package:fallreview/utilities/string.dart';
 import 'package:fallreview/utilities/colors.dart';
 import 'package:fallreview/database/FireStoreFunctions.dart';
 import 'package:fallreview/database/sembastfunctions.dart';
+import 'package:fallreview/screens/allscreens.dart';
+import 'package:fallreview/popups/generalinfopopup.dart';
+import 'package:fallreview/codeelements/TextInputChecks.dart';
 
 class BulletPoint extends StatelessWidget {
   @override
@@ -665,12 +668,29 @@ class _TextEntryFieldState extends State<TextEntryField> {
 
 class BottomButton extends StatelessWidget {
 
+
+
+  final String screen;
   final String text;
   final String route;
   final bool updateDatabase;
   final bool finalScreen;
 
-  BottomButton({@required this.text, @required this.route, this.updateDatabase, this.finalScreen});
+  BottomButton({@required this.text, @required this.route, this.updateDatabase, this.finalScreen, this.screen});
+
+  bool painDescriptionCompleted = true;
+  bool bonyTendernessDescriptionCompleted = true;
+  bool increasedPainDescriptionCompleted = true;
+  bool limbShorteningDescriptionCompleted = true;
+
+  bool sp02InRange = true;
+  bool bloodPressureSisInRange = true;
+  bool bloodPressureDiaInRange = true;
+  bool temperatureInRange = true;
+  bool pupilsInRange = true;
+  bool respiratoryRateInRange = true;
+  bool bloodGlucoseInRange = true;
+
 
   @override
   Widget build(BuildContext context) {
@@ -685,6 +705,56 @@ class BottomButton extends StatelessWidget {
 
             RaisedButton(color: mainColor,child: Text(text, style: TextStyle(color: Colors.white),),
               onPressed: () async{
+
+              // Check the fracture descriptions are completed
+              limbShorteningDescriptionCompleted = await fractureDescriptionOK(context: context,
+                  screen: screen,
+                  conditionBool: fallData.getLimbShort,
+                  conditionDescription: fallData.getLimbShortDesc,
+                  errorMessage: 'Please provide a description of the limb shortening');
+
+              increasedPainDescriptionCompleted = await fractureDescriptionOK(context: context,
+                  screen: screen,
+                  conditionBool: fallData.getChangePainWithMovement,
+                  conditionDescription: fallData.getChangePainWithMovDesc,
+                  errorMessage: 'Please provide a description of the increased pain');
+
+              bonyTendernessDescriptionCompleted = await fractureDescriptionOK(context: context,
+                  screen: screen,
+                  conditionBool: fallData.getBonyTenderness,
+                  conditionDescription: fallData.getBonyTendernessDesc,
+                  errorMessage: 'Please provide a description of the bony tenderness');
+
+              painDescriptionCompleted = await fractureDescriptionOK(context: context,
+                  screen: screen,
+                  conditionBool: fallData.getPain,
+                  conditionDescription: fallData.getPainDesc,
+                  errorMessage: 'Please provide a description of the pain');
+
+
+              // Check the vital signs ranges
+              sp02InRange = await vitalScreensValueOK(context: context,
+                  screen: screen,
+                  value: fallData.getOxygenSat,
+                  lowLimit: 0,
+                  highLimit: 100,
+                  errorMessage: 'Oxygen saturation should be between 0% and 100%');
+
+              bloodPressureSisInRange = await vitalScreensValueOK(context: context,
+                  screen: screen,
+                  value: fallData.getBPSis,
+                  lowLimit: 50,
+                  highLimit: 270,
+                  errorMessage: 'Systolic blood pressure should be between 50 and 270');
+
+              bloodPressureDiaInRange = await vitalScreensValueOK(context: context,
+                  screen: screen,
+                  value: fallData.getBPSis,
+                  lowLimit: 20,
+                  highLimit: 200,
+                  errorMessage: 'Diastolic blood pressure should be between 20 and 200');
+
+
 
               if (finalScreen != null && finalScreen){
 
@@ -819,8 +889,20 @@ class BottomButton extends StatelessWidget {
                 editFallInDatabase(fallKey: fallData.getLocalDBID,fallData: fallData.toJson());
               }
 
+              // TODO ????????????????????????
 
-              Navigator.pushNamed(context, route, arguments: fallData.getLocalDBID);
+              if (
+              screen == FractureCheckScreen.id &&
+              painDescriptionCompleted &&
+              bonyTendernessDescriptionCompleted &&
+              increasedPainDescriptionCompleted &&
+              limbShorteningDescriptionCompleted
+              ){
+                Navigator.pushNamed(context, route, arguments: fallData.getLocalDBID);
+              } else {
+                Navigator.pushNamed(context, route, arguments: fallData.getLocalDBID);
+              }
+
 
             },),
           ],

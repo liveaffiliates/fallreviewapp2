@@ -40,7 +40,7 @@ class _FractureCheckScreenState extends State<FractureCheckScreen> {
                   'Do you suspect a fracture?',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                FractureCheckInput(title: 'Do the have pain?',type: Strings.pain),
+                FractureCheckInput(title: 'Do the have pain?',type: Strings.pain, ),
                 FractureCheckInput(title: 'Bony tenderness on palpation?',type: Strings.bonyTenderness,),
                 FractureCheckInput(title: 'Increased pain with movement?',type: Strings.painWithMovement,),
                 FractureCheckInput(title: 'Limb shortening or deformity?',type: Strings.limbShortening,),
@@ -50,7 +50,8 @@ class _FractureCheckScreenState extends State<FractureCheckScreen> {
               BottomButton(text: 'Next',
                    route: VitalSignsCheckScreen.id,
                    updateDatabase: true,
-                   finalScreen: false),
+                   finalScreen: false,
+                   screen: FractureCheckScreen.id,),
 
               ],
             ),

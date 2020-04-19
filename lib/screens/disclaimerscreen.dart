@@ -15,8 +15,6 @@ class _DisclaimerScreenState extends State<DisclaimerScreen> {
   @override
   Widget build(BuildContext context) {
 
-
-
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -45,12 +43,8 @@ class _DisclaimerScreenState extends State<DisclaimerScreen> {
           ),
 
           Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
-
             Spacer(),
-            BottomButton(text: 'Next',route: HomeScreen.id, updateDatabase: false,),
-
-
-
+            BottomButton(text: 'Next',route: HomeScreen.id, updateDatabase: false,)
           ],)
         ],
       ),
